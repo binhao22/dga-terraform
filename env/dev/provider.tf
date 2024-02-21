@@ -1,4 +1,3 @@
-# Env Setting
 terraform {
   required_providers {
     aws = {
@@ -8,13 +7,6 @@ terraform {
   }
 }
 
-# Configure the AWS Provider 
 provider "aws" {
   region = var.region
-}
-
-# VPC modules
-module "vpc" {
-  source = "../../module/vpc"
-  vpc_cidr = var.vpc_cidr
 }

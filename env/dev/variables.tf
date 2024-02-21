@@ -1,9 +1,5 @@
-variable "region" {
-  type        = string
-  description = "AWS region"
-}
+# Terraform Cloud
+variable "region" {}
 
-variable "vpc_cidr" {
-  type        = string
-  description = "vpc cidr"
-}
+# terraform.tfvars
+variable "vpc_cidr" {}

@@ -1,4 +1,2 @@
-variable "vpc_cidr" {
-  type        = string
-  description = "vpc cidr"
-}
+# root module
+variable "vpc_cidr" {}
