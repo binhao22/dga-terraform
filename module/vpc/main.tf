@@ -120,20 +120,12 @@ resource "aws_route_table" "dga-rtb-pri" {
 # 라우팅 테이블 - 서브넷 연결
 resource "aws_route_table_association" "dga-rtb-association-pub" {
   subnet_id      = aws_subnet.dga-pub-1.id
-  route_table_id = aws_route_table.dga-rtb-pub.id
-}
-
-resource "aws_route_table_association" "dga-rtb-association-pub" {
   subnet_id      = aws_subnet.dga-pub-2.id
   route_table_id = aws_route_table.dga-rtb-pub.id
 }
 
 resource "aws_route_table_association" "dga-rtb-association-pri" {
   subnet_id      = aws_subnet.dga-pri-1.id
-  route_table_id = aws_route_table.dga-rtb-pri.id
-}
-
-resource "aws_route_table_association" "dga-rtb-association-pri" {
   subnet_id      = aws_subnet.dga-pri-2.id
   route_table_id = aws_route_table.dga-rtb-pri.id
 }
