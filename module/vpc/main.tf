@@ -1,6 +1,10 @@
 # VPC 생성
 resource "aws_vpc" "dga-vpc" {
   cidr_block = var.vpc_cidr
+
+  tags = {
+    Name = "dga-vpc"
+  }
 }
 
 
@@ -25,6 +29,10 @@ resource "aws_default_network_acl" "default" {
     from_port  = 0
     to_port    = 0
   }
+
+  tags = {
+    Name = "dga-nacl"
+  }
 }
 
 
@@ -33,12 +41,20 @@ resource "aws_subnet" "dga-pub-1" {
   vpc_id            = aws_vpc.dga-vpc.id
   cidr_block        = "10.0.0.0/20"
   availability_zone = "ap-northeast-2a"
+
+  tags = {
+    Name = "dga-pub-1"
+  }
 }
 
 resource "aws_subnet" "dga-pub-2" {
   vpc_id            = aws_vpc.dga-vpc.id
   cidr_block        = "10.0.16.0/20"
   availability_zone = "ap-northeast-2c"
+
+  tags = {
+    Name = "dga-pub-2"
+  }
 }
 
 
@@ -47,12 +63,20 @@ resource "aws_subnet" "dga-pri-1" {
   vpc_id            = aws_vpc.dga-vpc.id
   cidr_block        = "10.0.128.0/20"
   availability_zone = "ap-northeast-2a"
+
+  tags = {
+    Name = "dga-pri-1"
+  }
 }
 
 resource "aws_subnet" "dga-pri-2" {
   vpc_id            = aws_vpc.dga-vpc.id
   cidr_block        = "10.0.144.0/20"
   availability_zone = "ap-northeast-2c"
+
+  tags = {
+    Name = "dga-pri-2"
+  }
 }
 
 
@@ -63,12 +87,20 @@ resource "aws_eip" "dga-eip-ngw" {
   lifecycle {
     create_before_destroy = true
   }
+
+  tags = {
+    Name = "dga-eip-ngw"
+  }
 }
 
 
 # 인터넷 게이트웨이 생성
 resource "aws_internet_gateway" "dga-igw" {
   vpc_id = aws_vpc.dga-vpc.id
+
+  tags = {
+    Name = "dga-igw"
+  }
 }
 
 
@@ -76,6 +108,10 @@ resource "aws_internet_gateway" "dga-igw" {
 resource "aws_nat_gateway" "dga-ngw" {
   allocation_id = aws_eip.dga-eip-ngw.id
   subnet_id     = aws_subnet.dga-pub-1.id
+
+  tags = {
+    Name = "dga-ngw"
+  }
 
   # depends_on = [aws_internet_gateway.dga-eip-ngw]
 }
@@ -95,6 +131,10 @@ resource "aws_route_table" "dga-rtb-pub" {
     gateway_id = "local"
   }
 
+  tags = {
+    Name = "dga-rtb-pub"
+  }
+
   # depends_on = [aws_internet_gateway.dga-igw]
 }
 
@@ -111,6 +151,10 @@ resource "aws_route_table" "dga-rtb-pri" {
   route {
     cidr_block = "10.0.0.0/16"
     gateway_id = "local"
+  }
+
+  tags = {
+    Name = "dga-rtb-pri"
   }
 
   # depends_on = [aws_internet_gateway.dga-ngw]
