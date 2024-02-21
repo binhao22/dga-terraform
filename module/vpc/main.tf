@@ -92,7 +92,7 @@ resource "aws_route_table" "dga-rtb-pub" {
 
   route {
     cidr_block = "10.0.0.0/16"
-    gateway_id = local
+    gateway_id = "local"
   }
 
   # depends_on = [aws_internet_gateway.dga-igw]
@@ -105,12 +105,12 @@ resource "aws_route_table" "dga-rtb-pri" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.dga-ngw.id
+    gateway_id = aws_nat_gateway.dga-ngw.id
   }
 
   route {
     cidr_block = "10.0.0.0/16"
-    gateway_id = local
+    gateway_id = "local"
   }
 
   # depends_on = [aws_internet_gateway.dga-ngw]
