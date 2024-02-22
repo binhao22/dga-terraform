@@ -1,4 +1,4 @@
-data "output.tf" "dev" {
+data "tfe_outputs" "dev" {
   organization = "DGA-PROJECT"
   workspace = "dga-terraform"
 }
