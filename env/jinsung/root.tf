@@ -3,7 +3,7 @@ data "tfe_outputs" "woobin" {
   workspace = "woobin"
 }
 
-# test_create_ec2
+## test_create_ec2
 resource "aws_instance" "test_tf" {
 
   subnet_id = data.tfe_outputs.woobin.values.dga-pub-1-id
