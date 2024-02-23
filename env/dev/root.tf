@@ -1,6 +1,6 @@
 # VPC module
 module "dga-vpc" {
-  source = "../../module/vpc"
+  source = "./module/vpc"
 
   vpc_cidr = var.vpc_cidr
   # name     = var.name

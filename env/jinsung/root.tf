@@ -1,15 +1,12 @@
-data "tfe_outputs" "dev" {
+data "tfe_outputs" "woobin" {
   organization = "DGA-PROJECT"
   workspace = "dga-terraform"
 }
 
-## test_create_ec2
+# test_create_ec2
 resource "aws_instance" "test_tf" {
 
-  # Generate a new ID any time the value of 'bar' in workspace 'my-org/my-workspace' changes.
-  subnet_id = data.tfe_outputs.dev.values.dga-pub-1_id
-  
-#  subnet_id  = module.dga-vpc.dga-pub-1_id
+  subnet_id = data.tfe_outputs.woobin.values.dga-pub-1-id
   ami           = "ami-0c76973fbe0ee100c"
   instance_type = "t2.nano"
   associate_public_ip_address = true
@@ -18,4 +15,3 @@ resource "aws_instance" "test_tf" {
     Name = "test_tf"
   }
 }
-### 
