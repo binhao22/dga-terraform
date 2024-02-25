@@ -80,7 +80,7 @@ resource "aws_subnet" "dga-pri-2" {
 }
 
 
-# 탄력적 주소 생성
+# NATGW 탄력적 주소 생성
 resource "aws_eip" "dga-eip-ngw" {
   vpc = true
 
