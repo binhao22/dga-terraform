@@ -26,8 +26,6 @@ module "dga-eks" {
   # vpc id
 
   subnet_ids = [
-    var.dga-pub-1-id,
-    var.dga-pub-2-id,
     var.dga-pri-1-id,
     var.dga-pri-2-id
   ]
