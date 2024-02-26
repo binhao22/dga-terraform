@@ -8,7 +8,7 @@ resource "aws_lb" "dga-nlb" {
   internal           = false
   load_balancer_type = "network"
   security_groups    = [var.nlb-sg]
-  subnets            = [var.nlb-subs]
+  subnets            = [var.nlb-subs[0], var.nlb-subs[1]]
   enable_deletion_protection = true
 
   tags = {
