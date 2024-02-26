@@ -3,7 +3,7 @@ data "tfe_outputs" "woobin" {
   workspace = "woobin"
 }
 
-## test_create_ec2
+# test_create_ec2
 module "dga-eks" {
   source = "./module/eks"
   dga-vpc-id = data.tfe_outputs.woobin.values.dga-vpc-id
