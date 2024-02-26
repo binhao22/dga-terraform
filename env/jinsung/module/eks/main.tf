@@ -12,20 +12,29 @@ locals {
   dga-pri-2-id = data.tfe_outputs.woobin.dga-pri-2-id
 }
 
-module "eks" {
+module "dga-eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "18.26.6"
-  cluster_name    = "practice-cluster"
+  cluster_name    = "dga-cluster"
   cluster_version = "1.25"
+  # k8s version
+
+  cluster_security_group_id = data.tfe_outputs.woobin.values.dga-pri-sg-id
+  # security group 설정
+
   vpc_id          = local.dga-vpc-id
+  # vpc id
+
   subnet_ids = [
     local.dga-pub-1-id,
     local.dga-pub-2-id,
     local.dga-pri-1-id,
     local.dga-pri-2-id
   ]
+  # 클러스터의 subnet 설정
+
   eks_managed_node_groups = {
-    default_node_group = {
+    dga_node_group = {
       min_size       = 2
       max_size       = 4
       desired_size   = 3
@@ -33,11 +42,29 @@ module "eks" {
     }
   }
 
-  cluster_security_group_id = data.tfe_outputs.woobin.values.dga-pri-sg-id
-
   tags = {
     Environment = "dev"
     Terraform   = "true"
   }
+
   cluster_endpoint_private_access = true
+  # cluster를 private sub에 만듬
+}
+
+resource "aws_security_group_rule" "eks_cluster_add_access" {
+  security_group_id = module.eks.cluster_security_group_id
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["10.0.0.0/16"]
+}
+
+resource "aws_security_group_rule" "eks_node_add_access" {
+  security_group_id = module.eks.node_security_group_id
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["10.0.0.0/16"]
 }
