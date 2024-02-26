@@ -19,6 +19,7 @@ module "community_cors" {
   api_resource_id = aws_api_gateway_rest_api.dga-apigw.root_resource_id
 }
 
+/*
 # /boards
 resource "aws_api_gateway_resource" "boards" {
   rest_api_id = aws_api_gateway_rest_api.dga-apigw.id
@@ -38,7 +39,7 @@ resource "aws_api_gateway_method" "boards" {
   rest_api_id   = aws_api_gateway_rest_api.dga-apigw.id
 }
 
-/*
+
 resource "aws_api_gateway_integration" "boards" {
   http_method = aws_api_gateway_method.boards.http_method
   resource_id = aws_api_gateway_resource.boards.id
