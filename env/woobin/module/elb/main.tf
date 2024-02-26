@@ -59,6 +59,11 @@ resource "aws_lb_listener" "dga-nlb-listener" {
   port = 80
   protocol = "TCP"
 
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.dga-nlb-tg.arn
+  }
+
   tags = {
     name = "dga-nlb-listener"
   }
