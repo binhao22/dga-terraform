@@ -13,7 +13,7 @@ resource "aws_api_gateway_vpc_link" "dga-vpclink" {
   description = "dga-vpclink"
   target_arns = [var.dga-nlb-id]
 }
-
+/*
 module "community_cors" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"
@@ -21,6 +21,7 @@ module "community_cors" {
   for_each = toset( [aws_api_gateway_rest_api.dga-apigw.root_resource_id, aws_api_gateway_resource.boards.id] )
   api_resource_id = each.key
 }
+*/
 
 # /boards
 resource "aws_api_gateway_resource" "boards" {
@@ -48,7 +49,7 @@ resource "aws_api_gateway_integration" "boards" {
   resource_id = aws_api_gateway_resource.boards.id
   rest_api_id = aws_api_gateway_rest_api.dga-apigw.id
   type                    = "HTTP"
-  uri                     = format("%s/%s", var.dga-nlb-dns, "/boards")
+  uri                     = format("%s%s", var.dga-nlb-dns, "/boards")
   integration_http_method = "GET"
   connection_type = "VPC_LINK"
   connection_id   = aws_api_gateway_vpc_link.dga-vpclink.id
