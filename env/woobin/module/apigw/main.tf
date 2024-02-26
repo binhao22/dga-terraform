@@ -6,34 +6,73 @@ resource "aws_api_gateway_rest_api" "dga-apigw" {
   }
 }
 
+resource "aws_api_gateway_vpc_link" "dga-vpclink" {
+  name        = "dga-vpclink"
+  description = "dga-vpclink"
+  target_arns = [var.dga-nlb-id]
+}
+
 module "community_cors" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"
-
   api_id          = aws_api_gateway_rest_api.dga-apigw.id
   api_resource_id = aws_api_gateway_rest_api.dga-apigw.root_resource_id
 }
 
-resource "aws_api_gateway_resource" "dga-apigw-boards" {
+# /boards
+resource "aws_api_gateway_resource" "boards" {
+  rest_api_id = aws_api_gateway_rest_api.dga-apigw.id
   parent_id   = aws_api_gateway_rest_api.dga-apigw.root_resource_id
   path_part   = "boards"
-  rest_api_id = aws_api_gateway_rest_api.dga-apigw.id
+}
+module "community_cors" {
+  source  = "squidfunk/api-gateway-enable-cors/aws"
+  version = "0.3.3"
+  api_id          = aws_api_gateway_rest_api.dga-apigw.id
+  api_resource_id = aws_api_gateway_resource.boards.id
+}
+resource "aws_api_gateway_method" "boards" {
+  authorization = "NONE"
+  http_method   = "GET"
+  resource_id   = aws_api_gateway_resource.boards.id
+  rest_api_id   = aws_api_gateway_rest_api.dga-apigw.id
 }
 
 /*
-resource "aws_api_gateway_method" "example" {
+resource "aws_api_gateway_integration" "boards" {
+  http_method = aws_api_gateway_method.boards.http_method
+  resource_id = aws_api_gateway_resource.boards.id
+  rest_api_id = aws_api_gateway_rest_api.dga-apigw.id
+  type        = "MOCK"
+}
+
+
+
+# /boards/write
+resource "aws_api_gateway_resource" "write" {
+  rest_api_id = aws_api_gateway_rest_api.dga-apigw.id
+  parent_id   = aws_api_gateway_resource.boards.id
+  path_part   = "write"
+}
+module "community_cors" {
+  source  = "squidfunk/api-gateway-enable-cors/aws"
+  version = "0.3.3"
+  api_id          = aws_api_gateway_rest_api.dga-apigw.id
+  api_resource_id = aws_api_gateway_resource.write.id
+}
+resource "aws_api_gateway_method" "write" {
   authorization = "NONE"
   http_method   = "GET"
   resource_id   = aws_api_gateway_resource.example.id
   rest_api_id   = aws_api_gateway_rest_api.example.id
 }
-
 resource "aws_api_gateway_integration" "example" {
   http_method = aws_api_gateway_method.example.http_method
   resource_id = aws_api_gateway_resource.example.id
   rest_api_id = aws_api_gateway_rest_api.example.id
   type        = "MOCK"
 }
+
 
 resource "aws_api_gateway_deployment" "example" {
   rest_api_id = aws_api_gateway_rest_api.example.id

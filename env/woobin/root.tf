@@ -26,6 +26,7 @@ module "dga-elb" {
 # API Gateway
 module "dga-apigw" {
   source = "./module/apigw"
+  dga-nlb-id = module.dga-elb.dga-nlb-id
 }
 
 
