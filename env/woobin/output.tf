@@ -17,3 +17,15 @@ output "dga-pri-1-id" {
 output "dga-pri-2-id" {
   value = module.dga-vpc.dga-pri-2-id
 }
+
+output "dga-pub-sg-id" {
+  value = module.dga-sg.dga-pub-sg-id
+}
+
+output "dga-pri-sg-id" {
+  value = module.dga-sg.dga-pri-sg-id
+}
+
+output "dga-pri-db-sg-id" {
+  value = module.dga-sg.dga-pri-db-sg-id
+}

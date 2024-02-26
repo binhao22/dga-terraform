@@ -1,3 +1,4 @@
+# REST API 게이트웨이 생성
 resource "aws_api_gateway_rest_api" "dga-apigw" {
   name = "dga-apigw"
   endpoint_configuration {
@@ -8,12 +9,14 @@ resource "aws_api_gateway_rest_api" "dga-apigw" {
   }
 }
 
+# VPC Link 생성
 resource "aws_api_gateway_vpc_link" "dga-vpclink" {
   name        = "dga-vpclink"
   description = "dga-vpclink"
   target_arns = [var.dga-nlb-id]
 }
 
+# CORS 설정
 module "community_cors" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"
@@ -28,21 +31,12 @@ resource "aws_api_gateway_resource" "boards" {
   parent_id   = aws_api_gateway_rest_api.dga-apigw.root_resource_id
   path_part   = "boards"
 }
-/*
-module "community_cors2" {
-  source  = "squidfunk/api-gateway-enable-cors/aws"
-  version = "0.3.3"
-  api_id          = aws_api_gateway_rest_api.dga-apigw.id
-  api_resource_id = aws_api_gateway_resource.boards.id
-}
-*/
 resource "aws_api_gateway_method" "boards" {
   authorization = "NONE"
   http_method   = "GET"
   resource_id   = aws_api_gateway_resource.boards.id
   rest_api_id   = aws_api_gateway_rest_api.dga-apigw.id
 }
-
 resource "aws_api_gateway_integration" "boards" {
   http_method = aws_api_gateway_method.boards.http_method
   resource_id = aws_api_gateway_resource.boards.id
@@ -62,7 +56,7 @@ resource "aws_api_gateway_resource" "write" {
   parent_id   = aws_api_gateway_resource.boards.id
   path_part   = "write"
 }
-module "community_cors" {
+module "community_cors2" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"
   api_id          = aws_api_gateway_rest_api.dga-apigw.id
