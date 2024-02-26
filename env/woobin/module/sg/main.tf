@@ -23,6 +23,16 @@ resource "aws_security_group" "dga-pri-sg" {
   }
 }
 
+# 프라이빗 DB 보안그룹
+resource "aws_security_group" "dga-pri-db-sg" {
+  vpc_id = data.tfe_outputs.woobin.values.dga-vpc-id
+  name = "dga-pri-db-sg"
+  description = "dga-pri-db-sg"
+  tags = {
+    Name = "dga-pri-db-sg"
+  }
+}
+
 # 퍼블릭 보안그룹 규칙
 resource "aws_security_group_rule" "dga-pub-http-ingress" {
   type = "ingress"
@@ -88,6 +98,30 @@ resource "aws_security_group_rule" "dga-pri-egress" {
   protocol = "-1"
   cidr_blocks = [ "0.0.0.0/0" ]
   security_group_id = aws_security_group.dga-pri-sg.id
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+# 프라이빗 DB 보안그룹 규칙
+resource "aws_security_group_rule" "dga-pri-db-ingress" {
+  type = "ingress"
+  from_port = 3306
+  to_port = 3306
+  protocol = "TCP"
+  source_security_group_id = aws_security_group.dga-pri-sg.id
+  security_group_id = aws_security_group.dga-pri-db-sg.id
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+resource "aws_security_group_rule" "dga-pri-db-egress" {
+  type = "egress"
+  from_port = 0
+  to_port = 0
+  protocol = "-1"
+  cidr_blocks = [ "0.0.0.0/0" ]
+  security_group_id = aws_security_group.dga-pri-db-sg.id
   lifecycle {
     create_before_destroy = true
   }
