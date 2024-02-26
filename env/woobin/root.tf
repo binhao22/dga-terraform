@@ -22,7 +22,7 @@ resource "aws_instance" "woobin-test-ec2" {
   ami           = "ami-0c76973fbe0ee100c"
   instance_type = "t2.nano"
   associate_public_ip_address = true
-  vpc_security_group_ids = [module.dga-sg.dga-nlb-sg-id]
+  vpc_security_group_ids = [module.dga-sg.dga-pub-sg-id]
 
   tags = {
     Name = "woobin-test-ec2"
