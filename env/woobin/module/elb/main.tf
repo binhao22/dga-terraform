@@ -53,7 +53,7 @@ resource "aws_lb_target_group_attachment" "dga-nlb-tg-attachment" {
 resource "aws_lb_listener" "dga-nlb-listener" {
   load_balancer_arn = aws_lb.dga-nlb.arn
   port = 80
-  protocol = "HTTP"
+  protocol = "TCP"
 
   default_action {
     type = "fixed-response"
