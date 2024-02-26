@@ -4,7 +4,7 @@ data "tfe_outputs" "woobin" {
 }
 
 resource "aws_lb" "dga-nlb" {
-  name               = "dga-nlb"
+  name               = "dga-nlb-prod"
   internal           = false
   load_balancer_type = "network"
   security_groups    = [var.nlb-sg]
