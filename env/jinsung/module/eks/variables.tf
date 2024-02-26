@@ -1,5 +1,3 @@
-variable "vpc_cidr" {}
-
 variable "dga-vpc-id" {}
 
 variable "dga-pub-1-id" {}

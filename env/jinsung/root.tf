@@ -6,7 +6,6 @@ data "tfe_outputs" "woobin" {
 ## test_create_ec2
 module "dga-eks" {
   source = "./module/eks"
-  vpc-cidr = var.vpc-cidr
   dga-vpc-id = data.tfe_outputs.woobin.values.dga-vpc-id
   dga-pub-1-id = data.tfe_outputs.woobin.values.dga-pub-1-id
   dga-pub-2-id = data.tfe_outputs.woobin.values.dga-pub-2-id
