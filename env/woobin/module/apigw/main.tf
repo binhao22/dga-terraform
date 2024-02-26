@@ -1,6 +1,5 @@
 resource "aws_api_gateway_rest_api" "dga-apigw" {
   name = "dga-apigw"
-  types = ["REGIONAL"]
 }
 
 /*
