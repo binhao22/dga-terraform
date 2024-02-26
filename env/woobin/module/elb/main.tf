@@ -46,6 +46,10 @@ resource "aws_lb_target_group_attachment" "dga-nlb-tg-attachment" {
   target_group_arn = aws_lb_target_group.dga-nlb-tg.arn
   target_id        = aws_lb.eks-alb.id
   port             = 80
+
+  tags = {
+    name = "dga-nlb-tg-attachment"
+  }
 }
 */
 
@@ -55,13 +59,7 @@ resource "aws_lb_listener" "dga-nlb-listener" {
   port = 80
   protocol = "TCP"
 
-  default_action {
-    type = "fixed-response"
-
-    fixed_response {
-      content_type = "text/plain"
-      message_body = "404: page not found"
-      status_code = 404
-    }
+  tags = {
+    name = "dga-nlb-listener"
   }
 }
