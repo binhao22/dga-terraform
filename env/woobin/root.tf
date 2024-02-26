@@ -15,6 +15,13 @@ module "dga-sg" {
   source = "./module/sg"
 }
 
+# ELB
+module "dga-elb" {
+  source = "./module/elb"
+  nlb-subs = [module.dga-vpc.dga-pub-1-id, module.dga-vpc.dga-pub-2-id]
+  nlb-sg = module.dga-sg.dga-pub-sg-id
+}
+
 
 # test_create_ec2
 resource "aws_instance" "woobin-test-ec2" {
