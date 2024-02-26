@@ -18,7 +18,7 @@ module "community_cors" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"
   api_id          = aws_api_gateway_rest_api.dga-apigw.id
-  api_resource_id = aws_api_gateway_rest_api.dga-apigw.root_resource_id
+  api_resource_id = element(aws_api_gateway_rest_api.dga-apigw.root_resource_id, aws_api_gateway_resource.boards.id)
 }
 
 # /boards
@@ -27,12 +27,14 @@ resource "aws_api_gateway_resource" "boards" {
   parent_id   = aws_api_gateway_rest_api.dga-apigw.root_resource_id
   path_part   = "boards"
 }
+/*
 module "community_cors2" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"
   api_id          = aws_api_gateway_rest_api.dga-apigw.id
   api_resource_id = aws_api_gateway_resource.boards.id
 }
+*/
 resource "aws_api_gateway_method" "boards" {
   authorization = "NONE"
   http_method   = "GET"
@@ -45,7 +47,7 @@ resource "aws_api_gateway_integration" "boards" {
   resource_id = aws_api_gateway_resource.boards.id
   rest_api_id = aws_api_gateway_rest_api.dga-apigw.id
   type                    = "HTTP"
-  uri                     = var.dga-nlb-id
+  uri                     = format("%s/%s", var.dga-nlb-dns, "/boards")
   integration_http_method = "GET"
   connection_type = "VPC_LINK"
   connection_id   = aws_api_gateway_vpc_link.dga-vpclink.id
