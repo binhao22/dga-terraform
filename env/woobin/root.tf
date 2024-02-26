@@ -23,6 +23,11 @@ module "dga-elb" {
   nlb-sg = module.dga-sg.dga-pub-sg-id
 }
 
+# API Gateway
+module "dga-apigw" {
+  source = "./module/apigw"
+}
+
 
 # test_create_ec2
 resource "aws_instance" "woobin-test-ec2" {
