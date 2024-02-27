@@ -17,6 +17,10 @@
 
 # # #  EKS module
 
+# resource "dga-eks" "provider" {
+#   eks_cluster_id    = var.eks_cluster_id
+# }
+
 module "dga-eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "18.26.6"
