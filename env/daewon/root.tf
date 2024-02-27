@@ -7,6 +7,6 @@ data "tfe_outputs" "woobin" {
 module "s3_bucket" {
   source = "./modules/s3_bucket"
 
-  bucket_name = "my-unique-bucket-name"
+  bucket_name = "test.brokennose.shop"
   bucket_acl  = "public-read-write"
 }
