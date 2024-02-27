@@ -25,20 +25,20 @@ module "dga-userpool" {
   alias_attributes = ["email"]
   auto_verified_attributes = ["email"]
 
-#   string_schemas = [
-#     {
-#       attribute_data_type      = "String"
-#       developer_only_attribute = false
-#       mutable                  = false
-#       name                     = "email"
-#       required                 = true
+  string_schemas = [
+    {
+      attribute_data_type      = "String"
+      developer_only_attribute = false
+      mutable                  = true
+      name                     = "email"
+      required                 = true
 
-#       string_attribute_constraints = {
-#         min_length = 7
-#         max_length = 15
-#       }
-#     }
-#   ]
+      string_attribute_constraints = {
+        min_length = 7
+        max_length = 15
+      }
+    }
+  ]
 
   admin_create_user_config = {
     email_subject = "Welcome to Daddy Go Again !!"
