@@ -5,7 +5,7 @@ resource "aws_cognito_identity_provider" "dga-provider" {
   provider_type = "Google"
 
   provider_details = {
-    authorize_scopes = ["profile email openid"]
+    authorize_scopes = "profile email openid"
     client_id        = var.google_id
     client_secret    = var.google_secret
   }
@@ -62,5 +62,5 @@ resource "aws_cognito_user_pool_client" "userpool-client" {
   supported_identity_providers         = ["Google"]
   explicit_auth_flows                  = ["ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH"]
   enable_token_revocation              = true
-  prevent_user_existence_errors        = ENABLED
+  prevent_user_existence_errors        = "ENABLED"
 }
