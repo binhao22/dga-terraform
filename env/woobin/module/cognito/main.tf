@@ -1,6 +1,6 @@
 # 자격 증명 공급자 지정
 resource "aws_cognito_identity_provider" "dga-provider" {
-  user_pool_id  = aws_cognito_user_pool.pool.id
+  user_pool_id  = module.dga-userpool.id
   provider_name = "Google"
   provider_type = "Google"
 
@@ -32,14 +32,6 @@ module "dga-userpool" {
     email_sending_account  = "COGNITO_DEFAULT"
     reply_to_email_address = "no-reply@verificationemail.com"
   }
-  # 암호 규칙
-  password_policy = {
-    minimum_length    = 8
-    require_lowercase = true
-    require_numbers   = true
-    require_symbols   = false
-    require_uppercase = false
-  }
   # 사용자 계정 복구 방법
   recovery_mechanisms = [
      {
@@ -62,7 +54,7 @@ resource "aws_cognito_user_pool_domain" "dga-dom" {
 # 유저 풀 클라이언트 생성
 resource "aws_cognito_user_pool_client" "userpool-client" {
   name                                 = "userpool-client"
-  user_pool_id                         = aws_cognito_user_pool.pool.id
+  user_pool_id                         = module.dga-userpool.id
   callback_urls                        = ["https://www.daddygo.vacations/success"]
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["implicit"]
