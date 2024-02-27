@@ -56,6 +56,17 @@ resource "aws_security_group_rule" "dga-pub-https-ingress" {
     create_before_destroy = true
   }
 }
+resource "aws_security_group_rule" "dga-pub-ssh-ingress" {
+  type = "ingress"
+  from_port = 22
+  to_port = 22
+  protocol = "TCP"
+  cidr_blocks = [ "0.0.0.0/0" ]
+  security_group_id = aws_security_group.dga-pub-sg.id
+  lifecycle {
+    create_before_destroy = true
+  }
+}
 resource "aws_security_group_rule" "dga-pub-egress" {
   type = "egress"
   from_port = 0
@@ -84,6 +95,17 @@ resource "aws_security_group_rule" "dga-pri-https-ingress" {
   type = "ingress"
   from_port = 443
   to_port = 443
+  protocol = "TCP"
+  source_security_group_id = aws_security_group.dga-pub-sg.id
+  security_group_id = aws_security_group.dga-pri-sg.id
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+resource "aws_security_group_rule" "dga-pri-ssh-ingress" {
+  type = "ingress"
+  from_port = 22
+  to_port = 22
   protocol = "TCP"
   source_security_group_id = aws_security_group.dga-pub-sg.id
   security_group_id = aws_security_group.dga-pri-sg.id
