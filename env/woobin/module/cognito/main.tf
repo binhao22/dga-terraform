@@ -48,7 +48,7 @@ module "dga-userpool" {
     email_sending_account  = "COGNITO_DEFAULT"
   }
   # 앱을 통해 가입 가능
-  admin_create_user_config_allow_admin_create_user_only = flase
+  admin_create_user_config_allow_admin_create_user_only = "false"
   # 사용자 계정 복구 방법
   recovery_mechanisms = [
      {
