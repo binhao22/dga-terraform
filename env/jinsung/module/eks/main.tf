@@ -1,19 +1,19 @@
-provider "kubernetes" {
-  host                   = module.dga-eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
-  token                  = data.aws_eks_cluster_auth.eks.token
-}
-# Allow Helm to access k8s
-provider "helm" {
-  kubernetes {
-    host                   = module.eks.cluster_endpoint
-    cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-    token                  = data.aws_eks_cluster_auth.eks.token
-  }
-}
+# provider "kubernetes" {
+#   host                   = module.dga-eks.cluster_endpoint
+#   cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
+#   token                  = data.aws_eks_cluster_auth.eks.token
+# }
+# # Allow Helm to access k8s
+# provider "helm" {
+#   kubernetes {
+#     host                   = module.eks.cluster_endpoint
+#     cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+#     token                  = data.aws_eks_cluster_auth.eks.token
+#   }
+# }
 
-data "aws_caller_identity" "current" {} # ${data.aws_caller_identity.current.account_id}
-data "aws_eks_cluster_auth" "eks" {name = module.dga-eks.cluster_name}
+# data "aws_caller_identity" "current" {} # ${data.aws_caller_identity.current.account_id}
+# data "aws_eks_cluster_auth" "eks" {name = module.dga-eks.cluster_name}
 
 # # #  EKS module
 
