@@ -154,3 +154,4 @@ resource "aws_s3_bucket_acl" "s3_bucket_acl" {
 # S3 정적 웹 호스팅 엔드포인트
 output "s3_endpoint" {
   value = aws_s3_bucket_website_configuration.s3.website_endpoint
+}
