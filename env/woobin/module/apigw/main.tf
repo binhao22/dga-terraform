@@ -21,10 +21,11 @@ module "community_cors" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
   version = "0.3.3"
   api_id          = aws_api_gateway_rest_api.dga-apigw.id
-  for_each = toset( [aws_api_gateway_rest_api.dga-apigw.root_resource_id, aws_api_gateway_resource.proxy.id] )
+  for_each = {
+    a_group = aws_api_gateway_rest_api.dga-apigw.root_resource_id
+    another_group = aws_api_gateway_resource.proxy.id
+  }
   api_resource_id = each.key
-
-  depends_on = [ aws_api_gateway_rest_api.dga-apigw, aws_api_gateway_resource.proxy ]
 }
 
 # /{proxy+} 리소스 생성
