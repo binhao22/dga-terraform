@@ -25,20 +25,20 @@ module "dga-userpool" {
   alias_attributes = ["email"]
   auto_verified_attributes = ["email"]
 
-  string_schemas = [
-    {
-      attribute_data_type      = "String"
-      developer_only_attribute = false
-      mutable                  = false
-      name                     = "email"
-      required                 = true
+#   string_schemas = [
+#     {
+#       attribute_data_type      = "String"
+#       developer_only_attribute = false
+#       mutable                  = false
+#       name                     = "email"
+#       required                 = true
 
-      string_attribute_constraints = {
-        min_length = 7
-        max_length = 15
-      }
-    }
-  ]
+#       string_attribute_constraints = {
+#         min_length = 7
+#         max_length = 15
+#       }
+#     }
+#   ]
 
   admin_create_user_config = {
     email_subject = "Welcome to Daddy Go Again !!"
@@ -78,4 +78,5 @@ resource "aws_cognito_user_pool_client" "userpool-client" {
   explicit_auth_flows                  = ["ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
   enable_token_revocation              = true
   prevent_user_existence_errors        = "ENABLED"
+  generate_secret                      = true
 }
