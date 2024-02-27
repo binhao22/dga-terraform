@@ -27,15 +27,15 @@ module "dga-userpool" {
 
   string_schemas = [
     {
-      attribute_data_type      = null
-      developer_only_attribute = null
-      mutable                  = null
-      name                     = null
-      required                 = null
+      attribute_data_type      = "String"
+      developer_only_attribute = false
+      mutable                  = false
+      name                     = "email"
+      required                 = true
 
       string_attribute_constraints = {
-        min_length = null
-        max_length = null
+        min_length = 7
+        max_length = 15
       }
     }
   ]
