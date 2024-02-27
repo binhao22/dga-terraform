@@ -66,16 +66,16 @@ resource "aws_cognito_user_pool_domain" "dga-dom" {
   user_pool_id = module.dga-userpool.id
 }
 
-# # 유저 풀 클라이언트 생성
-# resource "aws_cognito_user_pool_client" "userpool-client" {
-#   name                                 = "userpool-client"
-#   user_pool_id                         = module.dga-userpool.id
-#   callback_urls                        = ["https://www.daddygo.vacations/success"]
-#   allowed_oauth_flows_user_pool_client = true
-#   allowed_oauth_flows                  = ["implicit"]
-#   allowed_oauth_scopes                 = ["email", "openid", "profile", "aws.cognito.signin.user.admin"]
-#   supported_identity_providers         = ["Google"]
-#   explicit_auth_flows                  = ["ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
-#   enable_token_revocation              = true
-#   prevent_user_existence_errors        = "ENABLED"
-# }
+# 유저 풀 클라이언트 생성
+resource "aws_cognito_user_pool_client" "userpool-client" {
+  name                                 = "userpool-client"
+  user_pool_id                         = module.dga-userpool.id
+  callback_urls                        = ["https://www.daddygo.vacations/success"]
+  allowed_oauth_flows_user_pool_client = true
+  allowed_oauth_flows                  = ["implicit"]
+  allowed_oauth_scopes                 = ["email", "openid", "profile", "aws.cognito.signin.user.admin"]
+  supported_identity_providers         = ["Google"]
+  explicit_auth_flows                  = ["ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
+  enable_token_revocation              = true
+  prevent_user_existence_errors        = "ENABLED"
+}
