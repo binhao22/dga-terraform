@@ -4,9 +4,10 @@ output "eks_cluster_endpoint" {
 output "eks_cluster_certificate_authority_data" {
   value = module.dga-eks.cluster_certificate_authority_data
 }
-output "token" {
-  value = module.dga-eks.token
-}
+#
+# output "token" {
+#   value = module.dga-eks.token
+# }
 # output "token" {
 #   value = module.dga-eks.cluster_name.token
 # }
