@@ -9,11 +9,24 @@ resource "aws_api_gateway_rest_api" "dga-apigw" {
   }
 }
 
+resource "aws_api_gateway_authorizer" "authorizer" {
+  name                   = "authorizer"
+  type                   = "COGNITO_USER_POOLS"
+  rest_api_id            = aws_api_gateway_rest_api.dga-apigw.id
+  authorizer_uri         = var.cognito-arn
+
+  depends_on = [ var.cognito-arn ]
+}
+
 # VPC Link 생성
 resource "aws_api_gateway_vpc_link" "dga-vpclink" {
   name        = "dga-vpclink"
   description = "dga-vpclink"
   target_arns = [var.dga-nlb-id]
+
+  tags = {
+    name = "dga-vpclink"
+  }
 }
 
 # CORS 설정
@@ -35,7 +48,8 @@ resource "aws_api_gateway_resource" "proxy" {
   path_part   = "{proxy+}"
 }
 resource "aws_api_gateway_method" "any" {
-  authorization = "NONE"
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = aws_api_gateway_authorizer.authorizer.id
   http_method   = "ANY"
   resource_id   = aws_api_gateway_resource.proxy.id
   rest_api_id   = aws_api_gateway_rest_api.dga-apigw.id

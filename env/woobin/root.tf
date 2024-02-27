@@ -28,11 +28,12 @@ module "dga-apigw" {
   source = "./module/apigw"
   dga-nlb-dns = module.dga-elb.dga-nlb-dns
   dga-nlb-id = module.dga-elb.dga-nlb-id
+  cognito-arn = module.dga-cognito.cognito-arn
 }
 
-# # Cognito
-# module "dga-cognito" {
-#   source = "./module/cognito"
-#   google_id = var.google_id
-#   google_secret = var.google_secret
-# }
+# Cognito
+module "dga-cognito" {
+  source = "./module/cognito"
+  google_id = var.google_id
+  google_secret = var.google_secret
+}
