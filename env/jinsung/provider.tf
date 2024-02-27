@@ -17,6 +17,6 @@ provider "aws" {
 
 provider "helm" {
   kubernetes {
-    region = var.region
+
   }
 }
