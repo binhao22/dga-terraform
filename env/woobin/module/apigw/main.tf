@@ -4,6 +4,7 @@ resource "aws_api_gateway_rest_api" "dga-apigw" {
   endpoint_configuration {
     types = ["REGIONAL"]
   }
+  binary_media_types = ["*/*"]
   tags = {
     name = "dga-apigw"
   }
