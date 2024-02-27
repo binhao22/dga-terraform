@@ -23,8 +23,8 @@ module "community_cors" {
   api_id          = aws_api_gateway_rest_api.dga-apigw.id
   for_each = toset( [aws_api_gateway_rest_api.dga-apigw.root_resource_id, aws_api_gateway_resource.proxy.id] )
   api_resource_id = each.key
-  
-  depends_on = [ aws_api_gateway_resource.proxy ]
+
+  depends_on = [ aws_api_gateway_rest_api.dga-apigw, aws_api_gateway_resource.proxy ]
 }
 
 # /{proxy+} 리소스 생성
