@@ -20,14 +20,14 @@ data "tfe_outputs" "jinsung" {
   workspace = "jinsung"
 }
 provider "kubernetes" {
-  host                   = nonsensitive(data.tfe_outputs.jinsung.values.eks_cluster_endpoint)
+  host                   = data.tfe_outputs.jinsung.nonsensitive_values.eks_cluster_endpoint
   # cluster_ca_certificate = base64decode(data.tfe_outputs.jinsung.values.eks_cluster_certificate_authority_data)
   #token                  = data.tfe_outputs.jinsung.values.cluster_name.token
 }
 
 provider "helm" {
   kubernetes {
-    host                   = nonsensitive(data.tfe_outputs.jinsung.values.eks_cluster_endpoint)
+    host                   = data.tfe_outputs.jinsung.nonsensitive_values.eks_cluster_endpoint
     # cluster_ca_certificate = base64decode(data.tfe_outputs.jinsung.values.eks_cluster_certificate_authority_data)
     #token                  = data.tfe_outputs.jinsung.values.cluster_name.token
   }
