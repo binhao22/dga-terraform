@@ -168,7 +168,7 @@ resource "helm_release" "aws-load-balancer-controller" {
 
   set {
     name = "clusterName"
-    value = module.dga-eks.cluster_name
+    value = "dga-cluster-test"
   }
   set {
     name = "serviceAccount.create"
