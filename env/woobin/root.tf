@@ -30,16 +30,9 @@ module "dga-apigw" {
   dga-nlb-id = module.dga-elb.dga-nlb-id
 }
 
-
-# test_create_ec2
-resource "aws_instance" "woobin-test-ec2" {
-  subnet_id  = module.dga-vpc.dga-pub-1-id
-  ami           = "ami-0c76973fbe0ee100c"
-  instance_type = "t2.nano"
-  associate_public_ip_address = true
-  vpc_security_group_ids = [module.dga-sg.dga-pub-sg-id]
-
-  tags = {
-    Name = "woobin-test-ec2"
-  }
-}
+# # Cognito
+# module "dga-cognito" {
+#   source = "./module/cognito"
+#   google_id = var.google_id
+#   google_secret = var.google_secret
+# }
