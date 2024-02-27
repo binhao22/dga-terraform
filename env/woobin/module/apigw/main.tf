@@ -25,7 +25,7 @@ module "community_cors" {
     resource1 = aws_api_gateway_rest_api.dga-apigw.root_resource_id
     resource2 = aws_api_gateway_resource.proxy.id
   }
-  api_resource_id = each.key
+  api_resource_id = each.value
 }
 
 # /{proxy+} 리소스 생성
