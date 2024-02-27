@@ -22,7 +22,23 @@ module "dga-userpool" {
   source  = "lgallard/cognito-user-pool/aws"
 
   user_pool_name           = "dga-userpool"
+  alias_attributes = ["email"]
   auto_verified_attributes = ["email"]
+
+  string_schemas = [
+    {
+      attribute_data_type      = "String"
+      developer_only_attribute = false
+      mutable                  = false
+      name                     = "email"
+      required                 = true
+
+      string_attribute_constraints = {
+        min_length = 7
+        max_length = 15
+      }
+    }
+  ]
 
   admin_create_user_config = {
     email_subject = "Welcome to Daddy Go Again !!"
@@ -30,7 +46,6 @@ module "dga-userpool" {
   # 가입 인증 이메일 전송
   email_configuration = {
     email_sending_account  = "COGNITO_DEFAULT"
-    reply_to_email_address = "no-reply@verificationemail.com"
   }
   # 사용자 계정 복구 방법
   recovery_mechanisms = [
