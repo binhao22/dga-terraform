@@ -21,13 +21,20 @@
 #   }
 # }
 
+# AWS 리전
 provider "aws" {
-  region = "ap-northeast-2"
+  region = var.region
 }
 
+# 버킷 이름 지정 및 객체 소유권
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = "my-unique-bucket-name"  # 생성할 S3 버킷의 이름을 지정합니다.
-  acl    = "public-read-write"                # 버킷의 액세스 제어를 설정합니다.
+  bucket = "test.brokennose.shop"  # 생성할 S3 버킷의 이름을 지정합니다.
+  acl    = "public-read-write"     # 버킷의 액세스 제어를 설정합니다.
+
+  website {
+    index_document = "index.html"  # 인덱스 문서 설정
+    error_document = "error.html"  # 오류 문서 설정
+  }
 }
 
 
@@ -46,3 +53,13 @@ resource "aws_s3_bucket_policy" "my_bucket_policy" {
     ]
   })
 }
+
+resource "aws_s3_bucket_cors_rule" "cors_rule" {
+  bucket = aws_s3_bucket.my_bucket.id
+
+  allowed_origins = ["*"]  # 모든 출처 허용, 필요에 따라 수정
+  allowed_methods = ["GET", "HEAD", "PUT", "POST", "DELETE"]  # 허용된 HTTP 메서드 설정
+  allowed_headers = ["*"]  # 모든 헤더 허용, 필요에 따라 수정
+}
+
+
