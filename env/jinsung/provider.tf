@@ -15,13 +15,11 @@ provider "aws" {
   region = var.region
 }
 
+
 provider "helm" {
   kubernetes {
     host                   = module.dga-eks.cluster_endpoint
     cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
-    #token                  = data.tfe_outputs.jinsung.values.cluster_name.token
-  }
-}
 
 # data "tfe_outputs" "jinsung" {
 #   organization = "DGA-PROJECT"
