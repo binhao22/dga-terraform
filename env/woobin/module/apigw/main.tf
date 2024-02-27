@@ -13,7 +13,7 @@ resource "aws_api_gateway_authorizer" "authorizer" {
   name                   = "authorizer"
   type                   = "COGNITO_USER_POOLS"
   rest_api_id            = aws_api_gateway_rest_api.dga-apigw.id
-  authorizer_uri         = var.cognito-arn
+  provider_arns          = var.cognito-arn
 
   depends_on = [ var.cognito-arn ]
 }

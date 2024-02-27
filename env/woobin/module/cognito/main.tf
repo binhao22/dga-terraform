@@ -60,7 +60,7 @@ resource "aws_cognito_user_pool_client" "userpool-client" {
   allowed_oauth_flows                  = ["implicit"]
   allowed_oauth_scopes                 = ["email", "openid", "profile", "aws.cognito.signin.user.admin"]
   supported_identity_providers         = ["Google"]
-  explicit_auth_flows                  = ["ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH"]
+  explicit_auth_flows                  = ["ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
   enable_token_revocation              = true
   prevent_user_existence_errors        = "ENABLED"
 }
