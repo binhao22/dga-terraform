@@ -22,8 +22,8 @@ module "community_cors" {
   version = "0.3.3"
   api_id          = aws_api_gateway_rest_api.dga-apigw.id
   for_each = {
-    a_group = aws_api_gateway_rest_api.dga-apigw.root_resource_id
-    another_group = aws_api_gateway_resource.proxy.id
+    resource1 = aws_api_gateway_rest_api.dga-apigw.root_resource_id
+    resource2 = aws_api_gateway_resource.proxy.id
   }
   api_resource_id = each.key
 }
