@@ -37,3 +37,11 @@ module "dga-cognito" {
   google_id = var.google_id
   google_secret = var.google_secret
 }
+
+module "dga-rds" {
+  source = "./module/rds"
+  dga-keypair = var.dga-keypair
+  db-subs = [module.dga-vpc.dga-pri-1-id, module.dga-vpc.dga-pri-2-id]
+  db-sg = module.dga-sg.dga-pri-db-sg-id
+  db-password = var.db-password
+}

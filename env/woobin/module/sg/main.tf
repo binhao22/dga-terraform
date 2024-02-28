@@ -126,10 +126,21 @@ resource "aws_security_group_rule" "dga-pri-egress" {
 }
 
 # 프라이빗 DB 보안그룹 규칙
-resource "aws_security_group_rule" "dga-pri-db-ingress" {
+resource "aws_security_group_rule" "dga-pri-db-rds-ingress" {
   type = "ingress"
-  from_port = 3306
-  to_port = 3306
+  from_port = 5432
+  to_port = 5432
+  protocol = "TCP"
+  source_security_group_id = aws_security_group.dga-pri-sg.id
+  security_group_id = aws_security_group.dga-pri-db-sg.id
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+resource "aws_security_group_rule" "dga-pri-db-dynamo-ingress" {
+  type = "ingress"
+  from_port = 27017
+  to_port = 27017
   protocol = "TCP"
   source_security_group_id = aws_security_group.dga-pri-sg.id
   security_group_id = aws_security_group.dga-pri-db-sg.id
