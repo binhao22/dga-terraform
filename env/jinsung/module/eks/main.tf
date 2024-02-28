@@ -1,16 +1,3 @@
-provider "helm" {
-  kubernetes {
-    host                   = module.dga-eks.cluster_endpoint
-    cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
-    #token                  = module.dga-eks.token
-  }
-}
-
-provider "kubernetes" {
-  host                   = module.dga-eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
-  #token                  = module.dga-eks.token
-}
 
 # # #  EKS module
 
