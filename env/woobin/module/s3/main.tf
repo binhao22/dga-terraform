@@ -1,3 +1,4 @@
+# 버킷 생성
 resource "aws_s3_bucket" "dga-s3" {
   bucket = "daddygoagain.vacations"
   force_destroy = true
@@ -7,6 +8,7 @@ resource "aws_s3_bucket" "dga-s3" {
   }
 }
 
+# 퍼블릭 액세스 설정
 resource "aws_s3_bucket_public_access_block" "public" {
   bucket = aws_s3_bucket.dga-s3.id
 
@@ -18,6 +20,7 @@ resource "aws_s3_bucket_public_access_block" "public" {
   depends_on = [aws_s3_bucket.dga-s3]
 }
 
+# CORS 설정
 resource "aws_s3_bucket_cors_configuration" "cors" {
   bucket = aws_s3_bucket.dga-s3.id
 
@@ -31,6 +34,7 @@ resource "aws_s3_bucket_cors_configuration" "cors" {
   depends_on = [aws_s3_bucket.dga-s3]
 }
 
+# 정적 웹 호스팅
 resource "aws_s3_bucket_website_configuration" "hosting" {
   bucket = aws_s3_bucket.dga-s3.id
 
@@ -45,10 +49,7 @@ resource "aws_s3_bucket_website_configuration" "hosting" {
   depends_on = [aws_s3_bucket.dga-s3]
 }
 
-resource "aws_s3_bucket" "example" {
-  bucket = "my-tf-test-bucket"
-}
-
+# 버킷 정책 생성
 resource "aws_s3_bucket_policy" "policy" {
   bucket = aws_s3_bucket.dga-s3.id
   policy = jsonencode(
@@ -60,8 +61,7 @@ resource "aws_s3_bucket_policy" "policy" {
           "Principal" : "*",
           "Action" : [
             "s3:GetObject",
-            "s3:PutObject",
-            "s3:ListObject"
+            "s3:PutObject"
           ],
           "Resource" : "${aws_s3_bucket.dga-s3.arn}/*"
         }
