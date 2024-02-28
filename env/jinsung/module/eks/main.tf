@@ -5,7 +5,7 @@ module "dga-eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "18.26.6"
   cluster_name    = "dga-cluster-test"
-  cluster_version = "1.25"
+  cluster_version = "1.29"
   # k8s version
 
   
