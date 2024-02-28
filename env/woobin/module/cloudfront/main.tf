@@ -17,7 +17,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = var.domain
+    target_origin_id = "${var.domain}.s3.amazonaws.com"
 
     forwarded_values {
       query_string = false
@@ -36,7 +36,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     path_pattern     = "/api/*"
     allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = var.apigw-id
+    target_origin_id = "dga-apigw"
 
     forwarded_values {
       query_string = false
