@@ -123,34 +123,34 @@ resource "kubernetes_service_account" "aws-load-balancer-controller" {
 }
 
 
-# resource "kubernetes_service_account" "external-dns" {
-#   metadata {
-#     name        = "external-dns"
-#     namespace   = "kube-system"
-#     annotations = {
-#       "eks.amazonaws.com/role-arn" = module.external_dns_irsa_role.iam_role_arn
-#     }
-#   }
+resource "kubernetes_service_account" "external-dns" {
+  metadata {
+    name        = "external-dns"
+    namespace   = "kube-system"
+    annotations = {
+      "eks.amazonaws.com/role-arn" = module.external_dns_irsa_role.iam_role_arn
+    }
+  }
 
-#   depends_on = [module.external_dns_irsa_role]
-# }
+  depends_on = [module.external_dns_irsa_role]
+}
 
-# module "external_dns_irsa_role" {
-#   source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+module "external_dns_irsa_role" {
+  source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
 
-#   role_name                     = "dga-test-externaldns-irsa-role" # test 이름
-#   attach_external_dns_policy    = true
-#   external_dns_hosted_zone_arns = [local.external_dns_arn]
+  role_name                     = "dga-test-externaldns-irsa-role" # test 이름
+  attach_external_dns_policy    = true
+  external_dns_hosted_zone_arns = [local.external_dns_arn]
 
-#   oidc_providers = {
-#     main = {
-#       provider_arn               = module.eks.oidc_provider_arn
-#       namespace_service_accounts = ["kube-system:external-dns"]
-#     }
-#   }
+  oidc_providers = {
+    main = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["kube-system:external-dns"]
+    }
+  }
 
-#   tags = local.tags
-# }
+  tags = local.tags
+}
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -190,26 +190,26 @@ resource "helm_release" "aws-load-balancer-controller" {
 
 # https://tech.polyconseil.fr/external-dns-helm-terraform.html
 # parameter https://github.com/kubernetes-sigs/external-dns/tree/master/charts/external-dns
-# resource "helm_release" "external_dns" {
-#   name       = "external-dns"
-#   namespace  = "kube-system"
-#   repository = "https://charts.bitnami.com/bitnami"
-#   chart      = "external-dns"
-#   wait       = false
-#   set {
-#     name = "provider"
-#     value = "aws"
-#   }
-#   set {
-#     name = "serviceAccount.create"
-#     value = false
-#   }
-#   set {
-#     name = "serviceAccount.name"
-#     value = "external-dns"
-#   }
-#   set {
-#     name  = "policy"
-#     value = "sync"
-#   }     
-# }
+resource "helm_release" "external_dns" {
+  name       = "external-dns"
+  namespace  = "kube-system"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "external-dns"
+  wait       = false
+  set {
+    name = "provider"
+    value = "aws"
+  }
+  set {
+    name = "serviceAccount.create"
+    value = false
+  }
+  set {
+    name = "serviceAccount.name"
+    value = "external-dns"
+  }
+  set {
+    name  = "policy"
+    value = "sync"
+  }     
+}
