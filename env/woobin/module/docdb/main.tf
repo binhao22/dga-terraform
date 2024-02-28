@@ -7,7 +7,7 @@ resource "aws_docdb_cluster" "dga-docdb" {
   db_subnet_group_name    = var.db-subgroup
   storage_type            = "standard"
   port                    = "27017"
-  vpc_security_group_ids  = [ var.db-sg[0], var.db-sg[1] ]
+  vpc_security_group_ids  = [ var.db-sg ]
 }
 
 resource "aws_docdb_cluster_instance" "dga-docdb-ins" {
