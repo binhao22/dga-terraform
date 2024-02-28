@@ -89,7 +89,8 @@ resource "helm_release" "release" {
       "region"                                                    = "ap-northeast-2"
       "vpcId"                                                     = var.dga-vpc-id
       "image.repository"                                          = "602401143452.dkr.ecr.ap-northeast-2.amazonaws.com/amazon/aws-load-balancer-controller"
-      "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = module.lb_controller_role.iam_role_arn
+      "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = arn:aws:iam::420615923610:role/dga-eks-aws-lb-ctrl1
+
     }
     content {
       name  = set.key
