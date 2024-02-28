@@ -1,6 +1,6 @@
 # 버킷 생성
 resource "aws_s3_bucket" "dga-s3" {
-  bucket = "daddygoagain.vacations"
+  bucket = "brokennose.shop"
   force_destroy = true
 
   tags = {
