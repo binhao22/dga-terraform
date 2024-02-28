@@ -59,3 +59,23 @@ module "dga-docdb" {
 module "dga-s3" {
   source = "./module/s3"
 }
+
+module "dga-route53" {
+  source = "./module/route53"
+  domain = var.domain
+}
+
+module "dga-cloudfront" {
+  source = "./module/cloudfront"
+  domain = var.domain
+  apigw-id = module.dga-apigw.apigw-id
+  s3-id = module.dga-s3.s3-id
+  cert-arn = module.dga-iam.cert-arn
+
+  depends_on = [ module.dga-route53 , module.dga-s3]
+}
+
+module "dga-iam" {
+  source = "./module/iam"
+  domain = var.domain
+}

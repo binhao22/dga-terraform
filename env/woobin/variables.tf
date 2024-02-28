@@ -11,3 +11,5 @@ variable "google_secret" {}
 variable "dga-keypair" {}
 
 variable "db-password" {}
+
+variable "domain" {}
