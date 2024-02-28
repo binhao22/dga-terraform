@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.0"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.0"
+    }
   }
 }
 
@@ -29,16 +33,3 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.dga-eks.eks_cluster_certificate_authority_data)
   #token                  = module.dga-eks.token
 }
-
-# data "tfe_outputs" "jinsung" {
-#   organization = "DGA-PROJECT"
-#   workspace = "jinsung"
-# }
-
-# provider "helm" {
-#   kubernetes {
-#     host                   = data.tfe_outputs.jinsung.values.eks_cluster_endpoint
-#     cluster_ca_certificate = base64decode(data.tfe_outputs.jinsung.values.eks_cluster_certificate_authority_data)
-#     #token                  = data.tfe_outputs.jinsung.values.cluster_name.token
-#   }
-# }
