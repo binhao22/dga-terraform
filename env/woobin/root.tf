@@ -39,21 +39,21 @@ module "dga-cognito" {
 }
 
 # RDS
-# module "dga-rds" {
-#   source = "./module/rds"
-#   dga-keypair = var.dga-keypair
-#   db-subs = [module.dga-vpc.dga-pri-1-id, module.dga-vpc.dga-pri-2-id]
-#   db-sg = module.dga-sg.dga-pri-db-sg-id
-#   db-password = var.db-password
-# }
+module "dga-rds" {
+  source = "./module/rds"
+  dga-keypair = var.dga-keypair
+  db-subs = [module.dga-vpc.dga-pri-1-id, module.dga-vpc.dga-pri-2-id]
+  db-sg = module.dga-sg.dga-pri-db-sg-id
+  db-password = var.db-password
+}
 
 # Docdb
-# module "dga-docdb" {
-#   source = "./module/docdb"
-#   db-subgroup = module.dga-rds.db-subgroup
-#   db-password = var.db-password
-#   db-sg        = module.dga-sg.dga-pri-db-sg-id
-# }
+module "dga-docdb" {
+  source = "./module/docdb"
+  db-subgroup = module.dga-rds.db-subgroup
+  db-password = var.db-password
+  db-sg        = module.dga-sg.dga-pri-db-sg-id
+}
 
 #S3
 module "dga-s3" {
