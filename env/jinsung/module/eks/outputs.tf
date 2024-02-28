@@ -8,6 +8,6 @@ output "eks_cluster_certificate_authority_data" {
 # output "token" {
 #   value = module.dga-eks.token
 # }
-output "token" {
-  value = module.dga-eks.cluster_id.token
-}
+# output "token" {
+#   value = module.dga-eks.cluster_id.token
+# }
