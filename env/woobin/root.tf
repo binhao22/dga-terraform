@@ -76,6 +76,7 @@ module "dga-cloudfront" {
 }
 
 module "dga-iam" {
+  providers = aws.acm
   source = "./module/iam"
   domain = var.domain
 }
