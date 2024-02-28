@@ -8,6 +8,7 @@ resource "aws_docdb_cluster" "dga-docdb" {
   storage_type            = "standard"
   port                    = "27017"
   vpc_security_group_ids  = [ var.db-sg ]
+  enabled_cloudwatch_logs_exports = ["audit", "profiler"]
 }
 
 resource "aws_docdb_cluster_instance" "dga-docdb-ins" {

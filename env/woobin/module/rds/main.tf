@@ -28,6 +28,7 @@ resource "aws_db_instance" "dga-postgre" {
   password = var.db-password
   port = "5432"
   multi_az = true
+  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
 
   tags = {
     "Name" = "dga-prostgre"
