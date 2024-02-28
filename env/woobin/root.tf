@@ -46,3 +46,11 @@ module "dga-rds" {
   db-sg = module.dga-sg.dga-pri-db-sg-id
   db-password = var.db-password
 }
+
+# Docdb
+module "dga-docdb" {
+  source = "./module/docdb"
+  db-subgroup = module.dga-rds.db-subgroup
+  db-password = var.db-password
+  db-sg        = module.dga-sg.dga-pri-db-sg-id
+}
