@@ -1,5 +1,4 @@
 
-
 # # #  EKS module
 
 module "dga-eks" {
@@ -39,6 +38,12 @@ module "dga-eks" {
   cluster_endpoint_private_access = true
   # cluster를 private sub에 만듬
 }
+
+# # # provider
+
+# locals {
+#   cluster_name = "dga-cluster-test"
+# }
 
 
 provider "helm" {
@@ -101,7 +106,7 @@ resource "helm_release" "release" {
 
   dynamic "set" {
     for_each = {
-      "clusterName"                                               = "dga-test-cluster"
+      "clusterName"                                               = "dga-cluster-test"
       "serviceAccount.create"                                     = "true"
       "serviceAccount.name"                                       = local.lb_controller_service_account_name
       "region"                                                    = "ap-northeast-2"
