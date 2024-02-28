@@ -26,5 +26,5 @@ data "tfe_outputs" "woobin" {
 #  -------------- 2트 -----------
 
 module "s3_bucket" {
-  source = "./modules/s3_bucket"  // 하위 모듈의 경로 지정
+  source = "./module/s3_bucket"  // 하위 모듈의 경로 지정
 }
