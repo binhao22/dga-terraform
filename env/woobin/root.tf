@@ -54,3 +54,8 @@ module "dga-docdb" {
   db-password = var.db-password
   db-sg        = module.dga-sg.dga-pri-db-sg-id
 }
+
+#S3
+module "dga-s3" {
+  source = "./module/s3"
+}
