@@ -1,7 +1,6 @@
 # VPC module
 module "dga-vpc" {
   source = "./module/vpc"
-
   vpc_cidr = var.vpc_cidr
   # name     = var.name
   # tags     = var.tags
@@ -77,7 +76,7 @@ module "dga-cloudfront" {
 
 module "dga-iam" {
   providers = {
-    aws = aws.acm
+    aws.src = aws.acm
   }
   source = "./module/iam"
   domain = var.domain
