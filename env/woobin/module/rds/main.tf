@@ -21,7 +21,8 @@ resource "aws_db_instance" "dga-postgre" {
   vpc_security_group_ids = [var.db-sg]
   engine = "postgres"
   engine_version = "14.11"
-  instance_class = "db.t3.small"
+  instance_class = "db.m5.large"
+  storage_type   = "gp3"
   identifier = "dga-postgre"
   username = "muzzi"
   password = var.db-password
