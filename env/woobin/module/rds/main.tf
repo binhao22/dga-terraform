@@ -17,6 +17,7 @@ resource "aws_db_instance" "dga-postgre" {
   allocated_storage = 20
   max_allocated_storage = 50
   skip_final_snapshot = true
+  backup_retention_period = 7
   db_subnet_group_name = aws_db_subnet_group.dga-subgroup.name
   vpc_security_group_ids = [var.db-sg]
   engine = "postgres"
