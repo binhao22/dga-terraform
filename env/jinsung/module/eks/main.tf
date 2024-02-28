@@ -51,7 +51,7 @@ provider "helm" {
 
 provider "kubernetes" {
   host                   = module.dga-eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.dga-eks.luster_certificate_authority_data)
+  cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
   #token                  = module.dga-eks.token
 }
 
