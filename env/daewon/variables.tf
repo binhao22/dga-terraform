@@ -1,2 +1,2 @@
-# # Terraform Cloud
-# variable "region" {}
+# Terraform Cloud
+variable "region" {}
