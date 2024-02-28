@@ -89,69 +89,94 @@
 
 # -------------------- 2트 ---------------------------------------
 
+
+# import {
+#   to = aws_s3_bucket_acl.example
+#   id = "bucket-name"
+# }
+
+
 # aws s3 rm s3://saju-front-prod --recursive
 # terraform destroy 를 하기전에 S3 버킷 내용이 삭제되어야 한다.
 # s3 버킷 생성시 AWS를 이용하는 모든 사용자들의 s3 버킷 이름과 중복해서 사용할 수 없습니다.
 
+
+
+
 # AWS 리전
+# provider "aws" {
+#   region = "ap-northeast-2"
+# }
+
+# # S3 버킷
+# # 위치 : s3 > 버킷
+# # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
+# resource "aws_s3_bucket" "create_bucket_test" {
+#   bucket = "test.brokennose.shop"
+
+
+# #   tags = {
+# #     Name = "create-bucket-test"
+# #     Service = "create-test"
+# #   }
+# }
+
+# resource "aws_s3_bucket_website_configuration" "s3_website" {
+#   bucket = "test.brokennose.shop"   //버킷 이름
+
+#   index_document {
+#     suffix = "index.html"
+#   }
+
+#   error_document {
+#     key = "index.html"
+#   }
+# }
+
+
+# resource "aws_s3_bucket_ownership_controls" "create_bucket_test" {
+#   bucket = aws_s3_bucket.create_bucket_test.id
+#   rule {
+#     object_ownership = "BucketOwnerPreferred"
+#   }
+# }
+
+# resource "aws_s3_bucket_public_access_block" "s3_block" {
+#   bucket = aws_s3_bucket.create_bucket_test.id
+
+#   block_public_acls       = false
+#   block_public_policy     = false
+#   ignore_public_acls      = false
+#   restrict_public_buckets = false
+# }
+
+# resource "aws_s3_bucket_acl" "s3_bucket_acl" {
+#   depends_on = [
+#     aws_s3_bucket_ownership_controls.create_bucket_test,
+#     aws_s3_bucket_public_access_block.s3_block,
+#   ]
+
+#   bucket = aws_s3_bucket.example.id
+#   acl    = "public-read"
+# }
+
+
+# # S3 정적 웹 호스팅 엔드포인트
+# output "s3_endpoint" {
+#   value = aws_s3_bucket_website_configuration.s3.website_endpoint
+# }
+
+
+# ------------------------  3트  ------------------------------
 provider "aws" {
   region = "ap-northeast-2"
 }
 
-# S3 버킷
-# 위치 : s3 > 버킷
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
-resource "aws_s3_bucket" "create_bucket_test" {
+// modules/s3_bucket/main.tf
+
+
+resource "aws_s3_bucket" "my_bucket" {
   bucket = "test.brokennose.shop"
-
-
-  tags = {
-    Name = "create-bucket-test"
-    Service = "create-test"
-  }
-}
-
-resource "aws_s3_bucket_website_configuration" "s3_website" {
-  bucket = "test.brokennose.shop"   //버킷 이름
-
-  index_document {
-    suffix = "index.html"
-  }
-
-  error_document {
-    key = "index.html"
-  }
-}
-
-
-resource "aws_s3_bucket_ownership_controls" "create_bucket_test" {
-  bucket = aws_s3_bucket.create_bucket_test.id
-  rule {
-    object_ownership = "BucketOwnerPreferred"
-  }
-}
-
-resource "aws_s3_bucket_public_access_block" "s3_block" {
-  bucket = aws_s3_bucket.create_bucket_test.id
-
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
-}
-
-resource "aws_s3_bucket_acl" "s3_bucket_acl" {
-  depends_on = [
-    aws_s3_bucket_ownership_controls.create_bucket_test,
-    aws_s3_bucket_public_access_block.s3_block,
-  ]
-
-  bucket = aws_s3_bucket.example.id
-  acl    = "public-read"
-}
-
-
-# S3 정적 웹 호스팅 엔드포인트
-output "s3_endpoint" {
-  value = aws_s3_bucket_website_configuration.s3.website_endpoint
+  acl    = "private"
+  # 추가적인 설정을 여기에 추가할 수 있습니다.
 }
