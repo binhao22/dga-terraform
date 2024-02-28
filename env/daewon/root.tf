@@ -1,7 +1,7 @@
-data "tfe_outputs" "woobin" {
-  organization = "DGA-PROJECT"
-  workspace = "woobin"
-}
+# data "tfe_outputs" "woobin" {
+#   organization = "DGA-PROJECT"
+#   workspace = "woobin"
+# }
 
 # module "s3_bucket" {
 #   source = "terraform-aws-modules/s3-bucket/aws"
