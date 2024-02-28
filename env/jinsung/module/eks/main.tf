@@ -41,23 +41,23 @@ module "dga-eks" {
 
 # # # provider
 
-# locals {
-#   cluster_name = "dga-cluster-test"
-# }
+data "aws_eks_cluster_auth" "this" {
+  name = "dga-cluster-test"
+}
 
 
 provider "helm" {
   kubernetes {
     host                   = module.dga-eks.cluster_endpoint
     cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
-    #token                  = module.dga-eks.token
+    token                  = data.aws_eks_cluster_auth.this.token
   }
 }
 
 provider "kubernetes" {
   host                   = module.dga-eks.cluster_endpoint
   cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
-  #token                  = module.dga-eks.token
+  token                  = data.aws_eks_cluster_auth.this.token
 }
 
 # # #
