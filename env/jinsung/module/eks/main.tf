@@ -5,9 +5,12 @@ module "dga-eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "18.26.6"
   cluster_name    = "dga-cluster-test"
-  cluster_version = "1.25"
+  cluster_version = "1.29"
   # k8s version
 
+  cluster_endpoint_private_access = true
+  cluster_endpoint_public_access  = true
+  
   cluster_security_group_id = var.dga-pri-sg-id
   # security group 설정
 
