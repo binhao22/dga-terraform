@@ -73,8 +73,6 @@ module "dga-cloudfront" {
   apigw-id = module.dga-apigw.apigw-id
   s3-id = module.dga-s3.s3-id
   cert-arn = module.dga-iam.cert-arn
-
-  depends_on = [ module.dga-route53 , module.dga-s3]
 }
 
 module "dga-iam" {
