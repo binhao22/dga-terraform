@@ -63,6 +63,8 @@ module "dga-s3" {
 module "dga-route53" {
   source = "./module/route53"
   domain = var.domain
+  domain_name = module.dga-cloudfront.domain_name
+  hosted_zone_id = module.dga-cloudfront.hosted_zone_id
 }
 
 module "dga-cloudfront" {
