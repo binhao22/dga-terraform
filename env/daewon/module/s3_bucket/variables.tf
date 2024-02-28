@@ -8,4 +8,4 @@ variable "dga-pri-sg-id" {}
 
 variable "region" {}
 
-variable "" {}
+variable "my_bucket" {}
