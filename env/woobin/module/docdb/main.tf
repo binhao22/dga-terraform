@@ -4,6 +4,7 @@ resource "aws_docdb_cluster" "dga-docdb" {
   master_username         = "muzzi"
   master_password         = var.db-password
   skip_final_snapshot     = true
+  backup_retention_period = 7
   db_subnet_group_name    = var.db-subgroup
   storage_type            = "standard"
   port                    = "27017"
