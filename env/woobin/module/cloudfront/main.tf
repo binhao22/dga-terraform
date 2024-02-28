@@ -60,6 +60,6 @@ resource "aws_cloudfront_distribution" "cdn" {
 
   viewer_certificate {
     acm_certificate_arn = var.cert-arn
-    cloudfront_default_certificate = var.cert-arn
+    cloudfront_default_certificate = true
   }
 }
