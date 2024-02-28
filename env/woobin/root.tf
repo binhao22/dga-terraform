@@ -48,12 +48,12 @@ module "dga-cognito" {
 # }
 
 # Docdb
-module "dga-docdb" {
-  source = "./module/docdb"
-  db-subgroup = module.dga-rds.db-subgroup
-  db-password = var.db-password
-  db-sg        = module.dga-sg.dga-pri-db-sg-id
-}
+# module "dga-docdb" {
+#   source = "./module/docdb"
+#   db-subgroup = module.dga-rds.db-subgroup
+#   db-password = var.db-password
+#   db-sg        = module.dga-sg.dga-pri-db-sg-id
+# }
 
 #S3
 module "dga-s3" {
