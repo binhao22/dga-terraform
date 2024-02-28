@@ -1,4 +1,5 @@
 
+
 # # #  EKS module
 
 module "dga-eks" {
@@ -8,8 +9,6 @@ module "dga-eks" {
   cluster_version = "1.29"
   # k8s version
 
-  
-  
   
   cluster_security_group_id = var.dga-pri-sg-id
   # security group 설정
@@ -39,6 +38,21 @@ module "dga-eks" {
 
   cluster_endpoint_private_access = true
   # cluster를 private sub에 만듬
+}
+
+
+provider "helm" {
+  kubernetes {
+    host                   = module.dga-eks.cluster_endpoint
+    cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
+    #token                  = module.dga-eks.token
+  }
+}
+
+provider "kubernetes" {
+  host                   = module.dga-eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.dga-eks.luster_certificate_authority_data)
+  #token                  = module.dga-eks.token
 }
 
 # # #
@@ -94,7 +108,6 @@ resource "helm_release" "release" {
       "vpcId"                                                     = "vpc-090e68d633efea5e4"
       "image.repository"                                          = "602401143452.dkr.ecr.ap-northeast-2.amazonaws.com/amazon/aws-load-balancer-controller"
       "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = "arn:aws:iam::420615923610:role/dga-eks-aws-lb-ctrl1"
-
     }
     content {
       name  = set.key
