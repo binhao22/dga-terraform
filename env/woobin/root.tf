@@ -38,6 +38,7 @@ module "dga-cognito" {
   google_secret = var.google_secret
 }
 
+# RDS
 module "dga-rds" {
   source = "./module/rds"
   dga-keypair = var.dga-keypair
