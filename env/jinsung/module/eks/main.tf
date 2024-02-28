@@ -88,7 +88,7 @@ resource "helm_release" "release" {
       "serviceAccount.create"                                     = "true"
       "serviceAccount.name"                                       = local.lb_controller_service_account_name
       "region"                                                    = "ap-northeast-2"
-      "vpcId"                                                     = var.dga-vpc-id
+      "vpcId"                                                     = "vpc-090e68d633efea5e4"
       "image.repository"                                          = "602401143452.dkr.ecr.ap-northeast-2.amazonaws.com/amazon/aws-load-balancer-controller"
       "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = "arn:aws:iam::420615923610:role/dga-eks-aws-lb-ctrl1"
 
