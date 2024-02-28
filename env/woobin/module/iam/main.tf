@@ -1,6 +1,6 @@
 resource "aws_acm_certificate" "cert" {
-  domain_name       = var.domain
-  validation_method = "EMAIL"
+  domain_name       = "*.${var.domain}"
+  validation_method = "DNS"
 
   tags = {
     Name = "dga-cert"
