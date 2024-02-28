@@ -9,5 +9,5 @@ output "eks_cluster_certificate_authority_data" {
 #   value = module.dga-eks.token
 # }
 output "token" {
-  value = module.dga-eks.cluster_name.token
+  value = module.dga-eks.cluster_id.token
 }

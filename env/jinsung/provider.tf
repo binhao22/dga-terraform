@@ -27,7 +27,7 @@ provider "helm" {
 provider "kubernetes" {
   host                   = module.dga-eks.eks_cluster_endpoint
   cluster_ca_certificate = base64decode(module.dga-eks.eks_cluster_certificate_authority_data)
-  token                  = data.tfe_outputs.jinsung.values.cluster_name.token
+  token                  = module.dga-eks.token
 }
 
 # data "tfe_outputs" "jinsung" {
