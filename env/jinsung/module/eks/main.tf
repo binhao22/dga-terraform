@@ -176,6 +176,7 @@ resource "kubernetes_ingress_v1" "alb" {
   metadata {
     name = "user-ingress"
     namespace = local.ns_user
+    
     annotations = {
       "alb.ingress.kubernetes.io/load-balancer-name" = "dga-alb-test"
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
@@ -198,6 +199,171 @@ resource "kubernetes_ingress_v1" "alb" {
             }
           }
           path = "/users"
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "alb" {
+  metadata {
+    name = "admin-ingress"
+    namespace = local.ns_admin
+    
+    annotations = {
+      "alb.ingress.kubernetes.io/load-balancer-name" = "dga-alb-test"
+      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type" = "ip"
+      "alb.ingress.kubernetes.io/group.name" = "dga-alb-group"
+      "alb.ingress.kubernetes.io/healthcheck-path" = "/admins"
+    }
+  }
+  spec {
+    ingress_class_name = "alb"
+    rule {
+      http {
+        path {
+          backend {
+            service {
+              name = "admin-svc"
+              port {
+                number = 80
+              }
+            }
+          }
+          path = "/admins"
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "alb" {
+  metadata {
+    name = "board-ingress"
+    namespace = local.ns_board
+    
+    annotations = {
+      "alb.ingress.kubernetes.io/load-balancer-name" = "dga-alb-test"
+      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type" = "ip"
+      "alb.ingress.kubernetes.io/group.name" = "dga-alb-group"
+      "alb.ingress.kubernetes.io/healthcheck-path" = "/boards/list"
+    }
+  }
+  spec {
+    ingress_class_name = "alb"
+    rule {
+      http {
+        path {
+          backend {
+            service {
+              name = "board-svc"
+              port {
+                number = 80
+              }
+            }
+          }
+          path = "/boards"
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "alb" {
+  metadata {
+    name = "leaderboard-ingress"
+    namespace = local.ns_leaderboard
+    
+    annotations = {
+      "alb.ingress.kubernetes.io/load-balancer-name" = "dga-alb-test"
+      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type" = "ip"
+      "alb.ingress.kubernetes.io/group.name" = "dga-alb-group"
+      "alb.ingress.kubernetes.io/healthcheck-path" = "/leaderboards"
+    }
+  }
+  spec {
+    ingress_class_name = "alb"
+    rule {
+      http {
+        path {
+          backend {
+            service {
+              name = "leaderboard-svc"
+              port {
+                number = 80
+              }
+            }
+          }
+          path = "/leaderboards"
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "alb" {
+  metadata {
+    name = "myplan-ingress"
+    namespace = local.ns_myplan
+    
+    annotations = {
+      "alb.ingress.kubernetes.io/load-balancer-name" = "dga-alb-test"
+      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type" = "ip"
+      "alb.ingress.kubernetes.io/group.name" = "dga-alb-group"
+      "alb.ingress.kubernetes.io/healthcheck-path" = "/myplans"
+    }
+  }
+  spec {
+    ingress_class_name = "alb"
+    rule {
+      http {
+        path {
+          backend {
+            service {
+              name = "myplan-svc"
+              port {
+                number = 80
+              }
+            }
+          }
+          path = "/myplans"
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "alb" {
+  metadata {
+    name = "search-ingress"
+    namespace = local.ns_search
+    
+    annotations = {
+      "alb.ingress.kubernetes.io/load-balancer-name" = "dga-alb-test"
+      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type" = "ip"
+      "alb.ingress.kubernetes.io/group.name" = "dga-alb-group"
+      "alb.ingress.kubernetes.io/healthcheck-path" = "/searches"
+    }
+  }
+  spec {
+    ingress_class_name = "alb"
+    rule {
+      http {
+        path {
+          backend {
+            service {
+              name = "search-svc"
+              port {
+                number = 80
+              }
+            }
+          }
+          path = "/searches"
         }
       }
     }
