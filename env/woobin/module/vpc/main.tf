@@ -44,7 +44,7 @@ resource "aws_subnet" "dga-pub-1" {
 
   tags = {
     Name = "dga-pub-1"
-    "kubernetes.io/cluster/dga-cluster" = "shared"
+    "kubernetes.io/cluster/dga-cluster-test" = "shared"
     "kubernetes.io/role/elb" = "1"
   }
 }
@@ -56,7 +56,7 @@ resource "aws_subnet" "dga-pub-2" {
 
   tags = {
     Name = "dga-pub-2"
-    "kubernetes.io/cluster/dga-cluster" = "shared"
+    "kubernetes.io/cluster/dga-cluster-test" = "shared"
     "kubernetes.io/role/elb" = "1"
   }
 }
@@ -70,7 +70,7 @@ resource "aws_subnet" "dga-pri-1" {
 
   tags = {
     Name = "dga-pri-1"
-    "kubernetes.io/cluster/dga-cluster" = "shared"
+    "kubernetes.io/cluster/dga-cluster-test" = "shared"
     "kubernetes.io/role/internal-elb" = "1"
   }
 }
@@ -82,7 +82,7 @@ resource "aws_subnet" "dga-pri-2" {
 
   tags = {
     Name = "dga-pri-2"
-    "kubernetes.io/cluster/dga-cluster" = "shared"
+    "kubernetes.io/cluster/dga-cluster-test" = "shared"
     "kubernetes.io/role/internal-elb" = "1"
   }
 }
