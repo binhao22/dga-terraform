@@ -153,7 +153,6 @@ resource "kubernetes_namespace" "admin" {
     name = "admin"
   }
 }
-
 resource "kubernetes_namespace" "argocd" {
   metadata {
     name = "argocd"
