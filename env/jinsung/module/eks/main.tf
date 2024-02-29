@@ -8,8 +8,8 @@ module "dga-eks" {
   cluster_version = "1.29"
   # k8s version
 
-  
   cluster_security_group_id = var.dga-pri-sg-id
+  # node_security_group_id = var.dga-pub-sg-id
   # security group 설정
 
   vpc_id          = var.dga-vpc-id
@@ -110,7 +110,7 @@ resource "helm_release" "release" {
       "serviceAccount.create"                                     = "true"
       "serviceAccount.name"                                       = local.lb_controller_service_account_name
       "region"                                                    = "ap-northeast-2"
-      "vpcId"                                                     = "vpc-090e68d633efea5e4"
+      "vpcId"                                                     = var.dga-vpc-id
       "image.repository"                                          = "602401143452.dkr.ecr.ap-northeast-2.amazonaws.com/amazon/aws-load-balancer-controller"
       "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = "arn:aws:iam::420615923610:role/dga-eks-aws-lb-ctrl1"
     }
@@ -121,50 +121,47 @@ resource "helm_release" "release" {
   }
 }
 
-# # # test용 배포
+# # # namespace
 
-resource "kubernetes_deployment" "echo" {
+resource "kubernetes_namespace" "board" {
   metadata {
-    name = "echo"
+    name = "board"
   }
-  spec {
-    replicas = 1
-    selector {
-      match_labels = {
-        "app.kubernetes.io/name" = "echo"
-      }
-    }
-    template {
-      metadata {
-        labels = {
-          "app.kubernetes.io/name" = "echo"
-        }
-      }
-      spec {
-        container {
-          image = "k8s.gcr.io/echoserver:1.10"
-          name  = "echo"
-        }
-      }
-    }
+}
+resource "kubernetes_namespace" "user" {
+  metadata {
+    name = "users"
+  }
+}
+resource "kubernetes_namespace" "leaderboard" {
+  metadata {
+    name = "leaderboard"
+  }
+}
+resource "kubernetes_namespace" "myplan" {
+  metadata {
+    name = "myplan"
+  }
+}
+resource "kubernetes_namespace" "search" {
+  metadata {
+    name = "search"
+  }
+}
+resource "kubernetes_namespace" "admin" {
+  metadata {
+    name = "admin"
   }
 }
 
-resource "kubernetes_service" "echo" {
+resource "kubernetes_namespace" "argocd" {
   metadata {
-    name = "echo"
-  }
-  spec {
-    selector = {
-      "app.kubernetes.io/name" = "echo"
-    }
-    port {
-      port        = 8080
-      target_port = 8080
-    }
-    type = "NodePort"
+    name = "argocd"
   }
 }
+
+
+# # # ingress 배포
 
 resource "kubernetes_ingress_v1" "alb" {
   metadata {

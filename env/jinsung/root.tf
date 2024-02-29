@@ -10,4 +10,5 @@ module "dga-eks" {
   dga-pri-1-id = data.tfe_outputs.woobin.values.dga-pri-1-id
   dga-pri-2-id = data.tfe_outputs.woobin.values.dga-pri-2-id
   dga-pri-sg-id = data.tfe_outputs.woobin.values.dga-pri-sg-id
+  dga-pub-sg-id = data.tfe_outputs.woobin.values.dga-pub-sg-id
 }
