@@ -130,7 +130,7 @@ resource "kubernetes_namespace" "board" {
 }
 resource "kubernetes_namespace" "user" {
   metadata {
-    name = "users"
+    name = "user"
   }
 }
 resource "kubernetes_namespace" "leaderboard" {
@@ -163,30 +163,34 @@ resource "kubernetes_namespace" "argocd" {
 
 # # # ingress 배포
 
-# resource "kubernetes_ingress_v1" "alb" {
-#   metadata {
-#     name = "alb"
-#     annotations = {
-#       "alb.ingress.kubernetes.io/scheme"      = "internet-facing",
-#       "alb.ingress.kubernetes.io/target-type" = "ip",
-#     }
-#   }
-#   spec {
-#     ingress_class_name = "alb"
-#     rule {
-#       http {
-#         path {
-#           backend {
-#             service {
-#               name = "echo"
-#               port {
-#                 number = 8080
-#               }
-#             }
-#           }
-#           path = "/*"
-#         }
-#       }
-#     }
-#   }
-# }
+resource "kubernetes_ingress_v1" "alb" {
+  metadata {
+    name = "user-ingress"
+    namespace = "user"
+    annotations = {
+      alb.ingress.kubernetes.io/load-balancer-name = "dga-alb"
+      alb.ingress.kubernetes.io/scheme = "internet-facing"
+      alb.ingress.kubernetes.io/target-type = "ip"
+      alb.ingress.kubernetes.io/group.name = "dga-alb-group"
+      alb.ingress.kubernetes.io/healthcheck-path = "/users/testget"
+    }
+  }
+  spec {
+    ingress_class_name = "alb"
+    rule {
+      http {
+        path {
+          backend {
+            service {
+              name = "user-svc"
+              port {
+                number = 80
+              }
+            }
+          }
+          path = "/users"
+        }
+      }
+    }
+  }
+}
