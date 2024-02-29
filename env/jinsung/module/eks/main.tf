@@ -205,7 +205,7 @@ resource "kubernetes_ingress_v1" "alb" {
   }
 }
 
-resource "kubernetes_ingress_v1" "alb" {
+resource "kubernetes_ingress_v1" "alb2" {
   metadata {
     name = "admin-ingress"
     namespace = local.ns_admin
@@ -238,7 +238,7 @@ resource "kubernetes_ingress_v1" "alb" {
   }
 }
 
-resource "kubernetes_ingress_v1" "alb" {
+resource "kubernetes_ingress_v1" "alb3" {
   metadata {
     name = "board-ingress"
     namespace = local.ns_board
@@ -271,7 +271,7 @@ resource "kubernetes_ingress_v1" "alb" {
   }
 }
 
-resource "kubernetes_ingress_v1" "alb" {
+resource "kubernetes_ingress_v1" "alb4" {
   metadata {
     name = "leaderboard-ingress"
     namespace = local.ns_leaderboard
@@ -304,7 +304,7 @@ resource "kubernetes_ingress_v1" "alb" {
   }
 }
 
-resource "kubernetes_ingress_v1" "alb" {
+resource "kubernetes_ingress_v1" "alb5" {
   metadata {
     name = "myplan-ingress"
     namespace = local.ns_myplan
@@ -337,7 +337,7 @@ resource "kubernetes_ingress_v1" "alb" {
   }
 }
 
-resource "kubernetes_ingress_v1" "alb" {
+resource "kubernetes_ingress_v1" "alb6" {
   metadata {
     name = "search-ingress"
     namespace = local.ns_search
