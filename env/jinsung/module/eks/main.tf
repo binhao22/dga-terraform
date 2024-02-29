@@ -163,30 +163,30 @@ resource "kubernetes_namespace" "argocd" {
 
 # # # ingress 배포
 
-resource "kubernetes_ingress_v1" "alb" {
-  metadata {
-    name = "alb"
-    annotations = {
-      "alb.ingress.kubernetes.io/scheme"      = "internet-facing",
-      "alb.ingress.kubernetes.io/target-type" = "ip",
-    }
-  }
-  spec {
-    ingress_class_name = "alb"
-    rule {
-      http {
-        path {
-          backend {
-            service {
-              name = "echo"
-              port {
-                number = 8080
-              }
-            }
-          }
-          path = "/*"
-        }
-      }
-    }
-  }
-}
+# resource "kubernetes_ingress_v1" "alb" {
+#   metadata {
+#     name = "alb"
+#     annotations = {
+#       "alb.ingress.kubernetes.io/scheme"      = "internet-facing",
+#       "alb.ingress.kubernetes.io/target-type" = "ip",
+#     }
+#   }
+#   spec {
+#     ingress_class_name = "alb"
+#     rule {
+#       http {
+#         path {
+#           backend {
+#             service {
+#               name = "echo"
+#               port {
+#                 number = 8080
+#               }
+#             }
+#           }
+#           path = "/*"
+#         }
+#       }
+#     }
+#   }
+# }
