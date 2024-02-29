@@ -80,4 +80,5 @@ module "dga-iam" {
   }
   source = "./module/iam"
   domain = var.domain
+  fqdn = module.dga-route53.fqdn
 }
