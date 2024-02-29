@@ -1,3 +1,9 @@
+# 타 워크스페이스에서 값을 받아옴
+data "tfe_outputs" "jinsung" {
+  organization = "DGA-PROJECT"
+  workspace = "jinsung"
+}
+
 # VPC module
 module "dga-vpc" {
   source = "./module/vpc"
@@ -16,6 +22,8 @@ module "dga-elb" {
   vpc-id = module.dga-vpc.dga-vpc-id
   nlb-subs = [module.dga-vpc.dga-pub-1-id, module.dga-vpc.dga-pub-2-id]
   nlb-sg = module.dga-sg.dga-pub-sg-id
+  alb-arn = var.alb-arn
+  
 }
 
 # API Gateway
