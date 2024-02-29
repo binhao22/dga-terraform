@@ -16,8 +16,6 @@ resource "aws_s3_bucket_public_access_block" "public" {
   block_public_policy     = false
   ignore_public_acls      = false
   restrict_public_buckets = false
-
-  depends_on = [aws_s3_bucket.dga-s3]
 }
 
 # CORS 설정
@@ -30,8 +28,6 @@ resource "aws_s3_bucket_cors_configuration" "cors" {
     allowed_origins = ["*"]
     expose_headers  = []
   }
-
-  depends_on = [aws_s3_bucket.dga-s3]
 }
 
 # 정적 웹 호스팅
@@ -45,8 +41,6 @@ resource "aws_s3_bucket_website_configuration" "hosting" {
   error_document {
     key = "index.html"
   }
-
-  depends_on = [aws_s3_bucket.dga-s3]
 }
 
 # 버킷 정책 생성
@@ -68,12 +62,9 @@ resource "aws_s3_bucket_policy" "policy" {
       ]
     }
   )
-  depends_on = [aws_s3_bucket.dga-s3]
 }
 
 resource "aws_s3_bucket_metric" "metric" {
   bucket = aws_s3_bucket.dga-s3.id
   name   = "dga-s3-metric"
-
-  depends_on = [aws_s3_bucket.dga-s3]
 }

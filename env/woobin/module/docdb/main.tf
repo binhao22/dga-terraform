@@ -10,8 +10,6 @@ resource "aws_docdb_cluster" "dga-docdb" {
   port                    = "27017"
   vpc_security_group_ids  = [ var.db-sg ]
   enabled_cloudwatch_logs_exports = ["audit", "profiler"]
-
-  depends_on = [ var.db-subgroup ]
 }
 
 resource "aws_docdb_cluster_instance" "dga-docdb-ins" {
