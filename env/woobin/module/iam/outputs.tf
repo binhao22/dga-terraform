@@ -1,3 +1,3 @@
 output "cert-arn" {
-  value = aws_acm_certificate.cert.arn
+  value = module.acm.acm_certificate_arn
 }

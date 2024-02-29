@@ -1,3 +1,3 @@
-output "fqdn" {
-  value = aws_route53_record.root-domain.fqdn
+output "zone-id" {
+  value = aws_route53_zone.zone_id
 }

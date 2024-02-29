@@ -1,3 +1,3 @@
 variable "domain" {}
 
-variable "fqdn" {}
+variable "zone-id" {}

@@ -72,8 +72,6 @@ module "dga-cloudfront" {
   apigw-id = module.dga-apigw.apigw-id
   s3-id = module.dga-s3.s3-id
   cert-arn = module.dga-iam.cert-arn
-
-  depends_on = [ module.dga-iam ]
 }
 
 module "dga-iam" {
@@ -82,5 +80,5 @@ module "dga-iam" {
   }
   source = "./module/iam"
   domain = var.domain
-  fqdn = module.dga-route53.fqdn
+  zone-id = module.dga-route53.zone-id
 }
