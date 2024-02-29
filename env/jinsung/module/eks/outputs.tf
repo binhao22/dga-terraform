@@ -4,6 +4,6 @@ output "eks_cluster_endpoint" {
 output "eks_cluster_certificate_authority_data" {
   value = module.dga-eks.cluster_certificate_authority_data
 }
-output "kubernetes_ingress_v1.alb" {
+output "kubernetes_ingress_v1_alb" {
   value = kubernetes_ingress_v1.alb.arn
 }
