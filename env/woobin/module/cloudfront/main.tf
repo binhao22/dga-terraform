@@ -12,7 +12,7 @@ resource "aws_cloudfront_distribution" "cdn" {
 
   origin {
     origin_id   = "dga-apigw"
-    domain_name = "${var.apigw-id}.s3.amazonaws.com"
+    domain_name = "${var.apigw-id}.execute-api.${var.region}.s3.amazonaws.com"
     custom_origin_config {
       http_port              = 80
       https_port             = 443
