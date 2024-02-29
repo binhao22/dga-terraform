@@ -7,3 +7,6 @@
 # output "token" {
 #   value = module.dga-eks.token
 # }
+output "alb-id" {
+  value = module.dga-eks.kubernetes_ingress_v1.alb
+}
