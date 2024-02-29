@@ -1,7 +1,7 @@
 resource "aws_cloudfront_distribution" "cdn" {
   origin {
     origin_id   = "dga-s3"
-    domain_name = "${var.domain}.s3.amazonaws.com"
+    domain_name = "${var.s3-id}.s3.amazonaws.com"
     custom_origin_config {
       http_port              = 80
       https_port             = 443
