@@ -177,7 +177,7 @@ resource "kubernetes_ingress_v1" "alb" {
     name = "user-ingress"
     namespace = local.ns_user
     annotations = {
-      "alb.ingress.kubernetes.io/load-balancer-name" = "dga-alb"
+      "alb.ingress.kubernetes.io/load-balancer-name" = "dga-alb-test"
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
       "alb.ingress.kubernetes.io/target-type" = "ip"
       "alb.ingress.kubernetes.io/group.name" = "dga-alb-group"
