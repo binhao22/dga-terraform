@@ -8,7 +8,7 @@ module "acm" {
   validation_method = "DNS"
 
   subject_alternative_names = [
-    "*.${my-domain.com}",
+    "*.${var.domain}",
   ]
 
   wait_for_validation = true
