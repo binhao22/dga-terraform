@@ -8,9 +8,9 @@ resource "aws_route53_record" "root-domain" {
   name = format("%s%s", "www.", var.domain)
   type = "A"
 
-  alias {
-    name = var.domain_name
-    zone_id = var.hosted_zone_id
-    evaluate_target_health = true
-  }
+  # alias {
+  #   name = var.domain_name
+  #   zone_id = var.hosted_zone_id
+  #   evaluate_target_health = true
+  # }
 }
