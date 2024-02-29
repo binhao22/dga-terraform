@@ -1,11 +1,6 @@
-data "tfe_outputs" "woobin" {
-  organization = "DGA-PROJECT"
-  workspace = "woobin"
-}
-
-# 퍼블릭 보안그룹
+# 퍼블릭 보안그룹 생성
 resource "aws_security_group" "dga-pub-sg" {
-  vpc_id = data.tfe_outputs.woobin.values.dga-vpc-id
+  vpc_id = var.vpc-id
   name = "dga-pub-sg"
   description = "dga-pub-sg"
   tags = {
@@ -13,9 +8,9 @@ resource "aws_security_group" "dga-pub-sg" {
   }
 }
 
-# 프라이빗 보안그룹
+# 프라이빗 보안그룹 생성
 resource "aws_security_group" "dga-pri-sg" {
-  vpc_id = data.tfe_outputs.woobin.values.dga-vpc-id
+  vpc_id = var.vpc-id
   name = "dga-pri-sg"
   description = "dga-pri-sg"
   tags = {
@@ -23,9 +18,9 @@ resource "aws_security_group" "dga-pri-sg" {
   }
 }
 
-# 프라이빗 DB 보안그룹
+# 프라이빗 DB 보안그룹 생성
 resource "aws_security_group" "dga-pri-db-sg" {
-  vpc_id = data.tfe_outputs.woobin.values.dga-vpc-id
+  vpc_id = var.vpc-id
   name = "dga-pri-db-sg"
   description = "dga-pri-db-sg"
   tags = {
@@ -33,7 +28,7 @@ resource "aws_security_group" "dga-pri-db-sg" {
   }
 }
 
-# 퍼블릭 보안그룹 규칙
+# 퍼블릭 보안그룹 http 인그리스 규칙
 resource "aws_security_group_rule" "dga-pub-http-ingress" {
   type = "ingress"
   from_port = 80
@@ -45,6 +40,7 @@ resource "aws_security_group_rule" "dga-pub-http-ingress" {
     create_before_destroy = true
   }
 }
+# 퍼블릭 보안그룹 https 인그리스 규칙
 resource "aws_security_group_rule" "dga-pub-https-ingress" {
   type = "ingress"
   from_port = 443
@@ -56,6 +52,7 @@ resource "aws_security_group_rule" "dga-pub-https-ingress" {
     create_before_destroy = true
   }
 }
+# 퍼블릭 보안그룹 ssh 인그리스 규칙
 resource "aws_security_group_rule" "dga-pub-ssh-ingress" {
   type = "ingress"
   from_port = 22
@@ -67,6 +64,7 @@ resource "aws_security_group_rule" "dga-pub-ssh-ingress" {
     create_before_destroy = true
   }
 }
+# 퍼블릭 보안그룹 egress 규칙
 resource "aws_security_group_rule" "dga-pub-egress" {
   type = "egress"
   from_port = 0
@@ -79,7 +77,7 @@ resource "aws_security_group_rule" "dga-pub-egress" {
   }
 }
 
-# 프라이빗 보안그룹 규칙
+# 프라이빗 보안그룹 http 인그리스 규칙
 resource "aws_security_group_rule" "dga-pri-http-ingress" {
   type = "ingress"
   from_port = 80
@@ -91,6 +89,7 @@ resource "aws_security_group_rule" "dga-pri-http-ingress" {
     create_before_destroy = true
   }
 }
+# 프라이빗 보안그룹 https 인그리스 규칙
 resource "aws_security_group_rule" "dga-pri-https-ingress" {
   type = "ingress"
   from_port = 443
@@ -102,6 +101,7 @@ resource "aws_security_group_rule" "dga-pri-https-ingress" {
     create_before_destroy = true
   }
 }
+# 프라이빗 보안그룹 ssh 인그리스 규칙
 resource "aws_security_group_rule" "dga-pri-ssh-ingress" {
   type = "ingress"
   from_port = 22
@@ -113,6 +113,7 @@ resource "aws_security_group_rule" "dga-pri-ssh-ingress" {
     create_before_destroy = true
   }
 }
+# 프라이빗 보안그룹 egress 규칙
 resource "aws_security_group_rule" "dga-pri-egress" {
   type = "egress"
   from_port = 0
@@ -125,7 +126,7 @@ resource "aws_security_group_rule" "dga-pri-egress" {
   }
 }
 
-# 프라이빗 DB 보안그룹 규칙
+# 프라이빗 DB 보안그룹 rds 인그리스 규칙
 resource "aws_security_group_rule" "dga-pri-db-rds-ingress" {
   type = "ingress"
   from_port = 5432
@@ -137,6 +138,7 @@ resource "aws_security_group_rule" "dga-pri-db-rds-ingress" {
     create_before_destroy = true
   }
 }
+# 프라이빗 DB 보안그룹 docdb 인그리스 규칙
 resource "aws_security_group_rule" "dga-pri-db-dynamo-ingress" {
   type = "ingress"
   from_port = 27017
@@ -148,6 +150,7 @@ resource "aws_security_group_rule" "dga-pri-db-dynamo-ingress" {
     create_before_destroy = true
   }
 }
+# 프라이빗 DB 보안그룹 egress 규칙
 resource "aws_security_group_rule" "dga-pri-db-egress" {
   type = "egress"
   from_port = 0

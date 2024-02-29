@@ -1,6 +1,7 @@
-# 버킷 생성
+# S3 버킷 생성
 resource "aws_s3_bucket" "dga-s3" {
   bucket = "brokennose.shop"
+  # 객체가 존재해도 강제 삭제 허용
   force_destroy = true
 
   tags = {
@@ -18,7 +19,7 @@ resource "aws_s3_bucket_public_access_block" "public" {
   restrict_public_buckets = false
 }
 
-# CORS 설정
+# CORS 허용 설정
 resource "aws_s3_bucket_cors_configuration" "cors" {
   bucket = aws_s3_bucket.dga-s3.id
 
@@ -64,6 +65,7 @@ resource "aws_s3_bucket_policy" "policy" {
   )
 }
 
+# 버킷 지표 생성
 resource "aws_s3_bucket_metric" "metric" {
   bucket = aws_s3_bucket.dga-s3.id
   name   = "dga-s3-metric"

@@ -1,5 +1,6 @@
+# From sg
 variable "db-sg" {}
-
-variable "db-password" {}
-
+# From rds
 variable "db-subgroup" {}
+# Terraform Cloud Variable
+variable "db-password" {}
