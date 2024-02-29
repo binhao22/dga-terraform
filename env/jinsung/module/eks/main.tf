@@ -121,6 +121,16 @@ resource "helm_release" "release" {
   }
 }
 
+# 배포에 사용할 namespace 지정
+locals {
+  ns_admin      = "admin"
+  ns_board = "board"
+  ns_leaderboard = "leaderboard"
+  ns_user = "user"
+  ns_search = "search"
+  ns_myplan = "myplan"
+}
+
 # # # namespace
 
 resource "kubernetes_namespace" "board" {
@@ -165,7 +175,7 @@ resource "kubernetes_namespace" "argocd" {
 resource "kubernetes_ingress_v1" "alb" {
   metadata {
     name = "user-ingress"
-    namespace = "user"
+    namespace = local.ns_user
     annotations = {
       "alb.ingress.kubernetes.io/load-balancer-name" = "dga-alb"
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
