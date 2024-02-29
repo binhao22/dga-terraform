@@ -2,7 +2,7 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "~> 4.0"
 
-  domain_name  = var.domain
+  domain_name  = "*.${var.domain}"
   zone_id      = var.zone-id
 
   validation_method = "DNS"
