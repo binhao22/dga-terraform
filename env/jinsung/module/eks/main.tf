@@ -378,7 +378,7 @@ module "argocd" {
   source = "squareops/argocd/kubernetes"
   argocd_config = {
     hostname                     = "argocd.prod.in"
-    values_yaml                  = file("module/eks/helm/values.yaml")
+    values_yaml                  = file("./module/eks/helm/values.yaml")
     redis_ha_enabled             = true
     autoscaling_enabled          = true
     slack_notification_token     = ""
