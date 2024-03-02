@@ -394,15 +394,6 @@ resource "kubernetes_ingress_v1" "alb6" {
 #   }
 # }
 
-provider "k8s" {
-  host                   = module.dga-eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
-  exec {
-    api_version = "client.authentication.k8s.io/v1alpha1"
-    args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster_auth.this.token]
-    command     = "aws"
-  }
-}
 module "argo_cd" {
   source = "runoncloud/argocd/kubernetes"
 
