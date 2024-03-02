@@ -385,7 +385,7 @@ module "argocd" {
   namespace = "agrocd"
   argocd_config = {
     hostname                     = "argocd.prod.in"
-    values_yaml                  = file("./values.yaml")
+    values_yaml                  = file("values.yaml")
     redis_ha_enabled             = true
     autoscaling_enabled          = true
     slack_notification_token     = ""
