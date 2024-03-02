@@ -49,14 +49,14 @@ data "aws_eks_cluster_auth" "this" {
 provider "helm" {
   kubernetes {
     host                   = module.dga-eks.cluster_endpoint
-    cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data.0.data)
+    cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
     token                  = data.aws_eks_cluster_auth.this.token
   }
 }
 
 provider "kubernetes" {
   host                   = module.dga-eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data.0.data)
+  cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
   token                  = data.aws_eks_cluster_auth.this.token
 }
 
@@ -378,7 +378,7 @@ module "argocd" {
   source = "squareops/argocd/kubernetes"
   argocd_config = {
     hostname                     = "argocd.prod.in"
-    values_yaml                  = file("module/eks//helm/values.yaml")
+    values_yaml                  = file("module/eks/helm/values.yaml")
     redis_ha_enabled             = true
     autoscaling_enabled          = true
     slack_notification_token     = ""
