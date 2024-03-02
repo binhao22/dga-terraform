@@ -364,11 +364,11 @@ resource "kubernetes_ingress_v1" "alb6" {
   }
 }
 
-resource "kubernetes_namespace" "argocd" {
-  metadata {
-    name = "argocd"
-  }
-}
+# resource "kubernetes_namespace" "argocd" {
+#   metadata {
+#     name = "argocd"
+#   }
+# }
 
 resource "helm_release" "argocd" {
   name       = "admin"
