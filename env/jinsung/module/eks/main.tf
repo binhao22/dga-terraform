@@ -364,39 +364,15 @@ resource "kubernetes_ingress_v1" "alb6" {
   }
 }
 
-# locals {
-#   region = "ap-northeast-2"
-#   additional_tags = {
-#     Owner       = "dga"
-#     Expires     = "Never"
-#     Department  = "Engineering"
-#     environment = "prod"
-#   }
-# }
+resource "kubernetes_namespace" "argocd" {
+  metadata {
+    name = "argocd"
+  }
+}
 
-# module "argocd" {
-#   source = "squareops/argocd/kubernetes"
-#   argocd_config = {
-#     hostname                     = "argocd.prod.in"
-#     values_yaml                  = file("./module/eks/helm/values.yaml")
-#     redis_ha_enabled             = true
-#     autoscaling_enabled          = true
-#     slack_notification_token     = ""
-#     argocd_notifications_enabled = true
-#   }
-# }
-
-# provider "helm" {
-#   kubernetes {
-#     host                   = module.dga-eks.cluster_endpoint
-#     cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
-#     token                  = data.aws_eks_cluster_auth.this.token
-#   }
-# }
-
-module "argo_cd" {
-  source = "runoncloud/argocd/kubernetes"
-
-  namespace       = "argocd"
-  argo_cd_version = "1.8.7"
+resource "helm_release" "argocd" {
+  name       = "admin"
+  chart      = "argo-cd"
+  repository = "https://argoproj.github.io/argo-helm"
+  namespace  = "argocd"
 }
