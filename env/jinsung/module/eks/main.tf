@@ -49,14 +49,14 @@ data "aws_eks_cluster_auth" "this" {
 provider "helm" {
   kubernetes {
     host                   = module.dga-eks.cluster_endpoint
-    cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
+    cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data.0.data)
     token                  = data.aws_eks_cluster_auth.this.token
   }
 }
 
 provider "kubernetes" {
   host                   = module.dga-eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
+  cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data.0.data)
   token                  = data.aws_eks_cluster_auth.this.token
 }
 
