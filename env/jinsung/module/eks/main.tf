@@ -382,7 +382,6 @@ locals {
 
 module "argocd" {
   source = "squareops/argocd/kubernetes"
-  namespace = "agrocd"
   argocd_config = {
     hostname                     = "argocd.prod.in"
     values_yaml                  = file("module/eks//helm/values.yaml")
