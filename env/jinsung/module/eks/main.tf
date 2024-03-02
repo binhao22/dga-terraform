@@ -390,10 +390,10 @@ locals {
       username = "hello"
       password = "bar"
     },
-    {
-      url          = "https://repo.git"
-      access_token = var.argocd_access_token
-    },
+    # {
+    #   url          = "https://repo.git"
+    #   access_token = var.argocd_access_token
+    # },
     {
       url  = "https://charts.jetstack.io"
       type = "helm"
