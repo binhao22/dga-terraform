@@ -423,5 +423,5 @@ module "argocd" {
     POLICY
   }
 
-  module_depends_on = [module.dga-eks]
+  # module_depends_on = [module.dga-eks]
 }
