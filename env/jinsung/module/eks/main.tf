@@ -364,24 +364,31 @@ resource "kubernetes_ingress_v1" "alb6" {
   }
 }
 
-locals {
-  region = "ap-northeast-2"
-  additional_tags = {
-    Owner       = "dga"
-    Expires     = "Never"
-    Department  = "Engineering"
-    environment = "prod"
-  }
-}
+# locals {
+#   region = "ap-northeast-2"
+#   additional_tags = {
+#     Owner       = "dga"
+#     Expires     = "Never"
+#     Department  = "Engineering"
+#     environment = "prod"
+#   }
+# }
 
-module "argocd" {
-  source = "squareops/argocd/kubernetes"
-  argocd_config = {
-    hostname                     = "argocd.prod.in"
-    values_yaml                  = file("./module/eks/helm/values.yaml")
-    redis_ha_enabled             = true
-    autoscaling_enabled          = true
-    slack_notification_token     = ""
-    argocd_notifications_enabled = true
-  }
+# module "argocd" {
+#   source = "squareops/argocd/kubernetes"
+#   argocd_config = {
+#     hostname                     = "argocd.prod.in"
+#     values_yaml                  = file("./module/eks/helm/values.yaml")
+#     redis_ha_enabled             = true
+#     autoscaling_enabled          = true
+#     slack_notification_token     = ""
+#     argocd_notifications_enabled = true
+#   }
+# }
+
+module "argo_cd" {
+  source = "runoncloud/argocd/kubernetes"
+
+  namespace       = "argocd"
+  argo_cd_version = "1.8.7"
 }
