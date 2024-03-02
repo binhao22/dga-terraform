@@ -370,15 +370,15 @@ resource "kubernetes_ingress_v1" "alb6" {
   }
 }
 
-# locals {
-#   region = "ap-northeast-2"
-#   additional_tags = {
-#     Owner       = "dga"
-#     Expires     = "Never"
-#     Department  = "Engineering"
-#     environment = "prod"
-#   }
-# }
+locals {
+  region = "ap-northeast-2"
+  additional_tags = {
+    Owner       = "dga"
+    Expires     = "Never"
+    Department  = "Engineering"
+    environment = "prod"
+  }
+}
 
 module "argocd" {
   source = "squareops/argocd/kubernetes"
