@@ -10,7 +10,7 @@ metadata:
     alb.ingress.kubernetes.io/backend-protocol: HTTPS
     alb.ingress.kubernetes.io/success-codes: "404"
     alb.ingress.kubernetes.io/healthcheck-path: /login
-    alb.ingress.kubernetes.io/group.name: argocd
+    #    alb.ingress.kubernetes.io/group.name: argocd
     alb.ingress.kubernetes.io/group.order: "1" # 우선순위 조정
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/manage-backend-security-group-rules: "true"
