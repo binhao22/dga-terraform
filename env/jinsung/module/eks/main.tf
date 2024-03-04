@@ -364,64 +364,34 @@ resource "kubernetes_ingress_v1" "alb6" {
   }
 }
 
-# resource "kubernetes_namespace" "argocd" {
-#   metadata {
-#     name = "argocd"
-#   }
-# }
+# # # ArgoCD
 
-# resource "helm_release" "argocd" {
-#   name       = "admin"
-#   chart      = "argo-cd"
-#   repository = "https://argoproj.github.io/argo-helm"
-#   namespace  = "argocd"
-# }
-
-locals {
-  # Example annotations when using Nginx ingress controller as shown here https://argoproj.github.io/argo-cd/operator-manual/ingress/#option-1-ssl-passthrough
-  argocd_ingress_annotations = {
-    "kubernetes.io/ingress.class" = "nginx"
-    "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true"
-    "nginx.ingress.kubernetes.io/ssl-passthrough" = "true"
+resource "kubernetes_namespace" "argocd" {
+  metadata {
+    name = "argocd"
   }
-  argocd_repositories = [
-    {
-      url      = "https://repo.git"
-      username = "hello"
-      password = "bar"
-    },
-    # {
-    #   url          = "https://repo.git"
-    #   access_token = var.argocd_access_token
-    # },
-    {
-      url  = "https://charts.jetstack.io"
-      type = "helm"
-    },
-  ]
+}
+# argocd namespace 생성
 
+resource "kubernetes_manifest" "argo_ingress" {
+  manifest = yamldecode(file(".jinsung/helm/argo_ingress.yml"))
 }
 
-module "argocd" {
-  source  = "DeimosCloud/argocd/kubernetes"  
+resource "helm_release" "argocd" {
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  version          = "3.26.0" // 사용하려는 ArgoCD 버전
+  namespace        = "argocd"
+  name             = "argocd"
+  create_namespace = true
 
-  ingress_host        = "argocd.example.com"
-  ingress_annotations = local.argocd_ingress_annotations
-  repositories        = local.argocd_repositories
-  # Argocd Config
-  config = {
-    "accounts.image-updater" = "apiKey"
+  set {
+    name  = "server.extraArgs.insecure"
+    value = "true"
   }
 
-  # Argocd RBAC Config
-  rbac_config = {
-    "policy.default" = "role:readonly"
-    "policy.csv"     = <<POLICY
-    p, role:image-updater, applications, get, */*, allow
-    p, role:image-updater, applications, update, */*, allow
-    g, image-updater, role:image-updater
-    POLICY
-  }
-
-  # module_depends_on = [module.dga-eks]
+  depends_on = [
+    module.dga-eks,
+    kubernetes_namespace.argocd
+  ]
 }
