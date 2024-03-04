@@ -366,32 +366,32 @@ resource "kubernetes_ingress_v1" "alb6" {
 
 # # # ArgoCD
 
-# resource "kubernetes_namespace" "argocd" {
-#   metadata {
-#     name = "argocd"
-#   }
-# }
-# # argocd namespace 생성
+resource "kubernetes_namespace" "argocd" {
+  metadata {
+    name = "argocd"
+  }
+}
+# argocd namespace 생성
 
-# resource "kubernetes_manifest" "argo_ingress" {
-#   manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
-# }
+resource "kubernetes_manifest" "argo_ingress" {
+  manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
+}
 
-# resource "helm_release" "argocd" {
-#   repository       = "https://argoproj.github.io/argo-helm"
-#   chart            = "argo-cd"
-#   version          = "3.26.0" // 사용하려는 ArgoCD 버전
-#   namespace        = "argocd"
-#   name             = "argocd"
-#   create_namespace = true
+resource "helm_release" "argocd" {
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  version          = "3.26.0" // 사용하려는 ArgoCD 버전
+  namespace        = "argocd"
+  name             = "argocd"
+  create_namespace = true
 
-#   set {
-#     name  = "server.extraArgs.insecure"
-#     value = "true"
-#   }
+  set {
+    name  = "server.extraArgs.insecure"
+    value = "true"
+  }
 
-#   depends_on = [
-#     module.dga-eks,
-#     kubernetes_namespace.argocd
-#   ]
-# }
+  depends_on = [
+    module.dga-eks,
+    kubernetes_namespace.argocd
+  ]
+}
