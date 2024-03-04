@@ -11,7 +11,7 @@ metadata:
     alb.ingress.kubernetes.io/success-codes: "404"
     alb.ingress.kubernetes.io/healthcheck-path: /login
     #    alb.ingress.kubernetes.io/group.name: argocd
-    alb.ingress.kubernetes.io/group.order: "1" # 우선순위 조정
+    # alb.ingress.kubernetes.io/group.order: "1" # 우선순위 조정
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/manage-backend-security-group-rules: "true"
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:420615923610:certificate/869327a0-e390-4d75-a271-d2df542b0c76
