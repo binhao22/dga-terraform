@@ -7,4 +7,4 @@ variable "vpc-id" {}
 # From eks in jinsung
 # variable "alb-arn" {}
 
-variable "alb-arn" {}
+# variable "alb-arn" {}

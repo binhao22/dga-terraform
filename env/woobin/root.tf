@@ -22,7 +22,7 @@ module "dga-elb" {
   vpc-id = module.dga-vpc.dga-vpc-id
   nlb-subs = [module.dga-vpc.dga-pub-1-id, module.dga-vpc.dga-pub-2-id]
   nlb-sg = module.dga-sg.dga-pub-sg-id
-  alb-arn = var.alb-arn
+  # alb-arn = var.alb-arn
   
 }
 

@@ -40,13 +40,13 @@ resource "aws_lb_target_group" "dga-nlb-tg" {
   }
 }
 
-# nlb 타겟그룹 연결
-resource "aws_lb_target_group_attachment" "dga-nlb-tg-attachment" {
-  target_group_arn = aws_lb_target_group.dga-nlb-tg.arn
-  # EKS 에서 생성된 ALB 연결
-  target_id        = var.alb-arn
-  port             = 80
-}
+# nlb 타겟그룹 연결 -> EKS 모듈에서 ALB 생성 후 수동으로 연결
+# resource "aws_lb_target_group_attachment" "dga-nlb-tg-attachment" {
+#   target_group_arn = aws_lb_target_group.dga-nlb-tg.arn
+#   # EKS 에서 생성된 ALB 연결
+#   target_id        = var.alb-arn
+#   port             = 80
+# }
 
 # nlb 리스너 생성
 resource "aws_lb_listener" "dga-nlb-listener" {
