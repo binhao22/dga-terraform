@@ -14,7 +14,7 @@ metadata:
     # alb.ingress.kubernetes.io/group.order: "1" # 우선순위 조정
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/manage-backend-security-group-rules: "true"
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:420615923610:certificate/869327a0-e390-4d75-a271-d2df542b0c76
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:420615923610:certificate/3dc92f2a-c7ef-4cf8-8f5b-289e4b3f613d
     alb.ingress.kubernetes.io/ssl-redirect: "443"
 spec:
   rules:
