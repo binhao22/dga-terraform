@@ -38,7 +38,7 @@ module "dga-eks" {
   cluster_endpoint_private_access = true
   # cluster를 private sub에 만듬
 }
-
+#
 # # # provider
 
 # data "aws_eks_cluster_auth" "this" {
