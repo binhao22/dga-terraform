@@ -419,27 +419,27 @@ resource "kubernetes_namespace" "argocd" {
 }
 # argocd namespace 생성
 
-# resource "kubernetes_manifest" "argo_ingress" {
-#   manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
-#   depends_on = [ 
-#     resource.kubernetes_namespace.argocd
-#    ]
-# }
-
-resource "helm_release" "argocd" {
-  repository       = "https://argoproj.github.io/argo-helm"
-  chart            = "argo-cd"
-  version          = "3.26.0" // 사용하려는 ArgoCD 버전
-  namespace        = "argocd"
-  name             = "argocd"
-  create_namespace = true
-
-  set {
-    name  = "server.extraArgs.insecure"
-    value = "true"
-  }
-
-  depends_on = [
-    resource.helm_release.release
-  ]
+resource "kubernetes_manifest" "argo_ingress" {
+  manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
+  depends_on = [ 
+    resource.kubernetes_namespace.argocd
+   ]
 }
+
+# resource "helm_release" "argocd" {
+#   repository       = "https://argoproj.github.io/argo-helm"
+#   chart            = "argo-cd"
+#   version          = "3.26.0" // 사용하려는 ArgoCD 버전
+#   namespace        = "argocd"
+#   name             = "argocd"
+#   create_namespace = true
+
+#   set {
+#     name  = "server.extraArgs.insecure"
+#     value = "true"
+#   }
+
+#   depends_on = [
+#     resource.helm_release.release
+#   ]
+# }
