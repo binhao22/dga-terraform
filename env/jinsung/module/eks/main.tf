@@ -416,7 +416,7 @@ resource "kubernetes_namespace" "argocd" {
     name = "argocd"
   }
   depends_on = [ 
-    resource.helm_release.argocd
+    resource.kubernetes_namespace.search
    ]
 }
 # # # argocd namespace 생성
@@ -442,6 +442,6 @@ resource "helm_release" "argocd" {
   }
 
   depends_on = [
-    resource.helm_release.release
+    resource.kubernetes_namespace.argocd
   ]
 }
