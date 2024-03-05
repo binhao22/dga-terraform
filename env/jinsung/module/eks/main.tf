@@ -51,17 +51,17 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.this.token
 }
 
-# provider "helm" {
-#   kubernetes {
-#     host                   = module.dga-eks.cluster_endpoint
-#     cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
-#     token                  = data.aws_eks_cluster_auth.this.token
-#   }
-# }
+provider "helm" {
+  kubernetes {
+    host                   = module.dga-eks.cluster_endpoint
+    cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
+    token                  = data.aws_eks_cluster_auth.this.token
+  }
+}
 
 
 
-# # # #
+# # #
 
 # locals {
 #   lb_controller_iam_role_name        = "dga-eks-aws-lb-ctrl1"
