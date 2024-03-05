@@ -433,6 +433,17 @@ resource "kubernetes_ingress_v1" "alb6" {
 
 # # # ArgoCD
 
+resource "kubernetes_namespace" "argocd" {
+  metadata {
+    name = "argocd"
+  }
+}
+# argocd namespace 생성
+
+resource "kubernetes_manifest" "argo_ingress" {
+  manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
+}
+
 # resource "kubernetes_namespace" "argocd" {
 #   metadata {
 #     name = "argocd"
@@ -441,7 +452,7 @@ resource "kubernetes_ingress_v1" "alb6" {
 #     resource.helm_release.argocd
 #    ]
 # }
-# argocd namespace 생성
+# # argocd namespace 생성
 
 # resource "kubernetes_manifest" "argo_ingress" {
 #   manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
