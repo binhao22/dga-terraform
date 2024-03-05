@@ -191,41 +191,41 @@ resource "kubernetes_namespace" "admin" {
 
 # # # ingress 배포
 
-resource "kubernetes_ingress_v1" "alb" {
-  metadata {
-    name = "user-ingress"
-    namespace = local.ns_user
+# resource "kubernetes_ingress_v1" "alb" {
+#   metadata {
+#     name = "user-ingress"
+#     namespace = local.ns_user
     
-    annotations = {
-      "alb.ingress.kubernetes.io/load-balancer-name" = "dga-alb-test"
-      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
-      "alb.ingress.kubernetes.io/target-type" = "ip"
-      "alb.ingress.kubernetes.io/group.name" = "dga-alb-group"
-      "alb.ingress.kubernetes.io/healthcheck-path" = "/users/testget"
-    }
-  }
-  spec {
-    ingress_class_name = "alb"
-    rule {
-      http {
-        path {
-          backend {
-            service {
-              name = "user-svc"
-              port {
-                number = 80
-              }
-            }
-          }
-          path = "/users"
-        }
-      }
-    }
-  }
-  depends_on = [ 
-    resource.kubernetes_namespace.user
-   ]
-}
+#     annotations = {
+#       "alb.ingress.kubernetes.io/load-balancer-name" = "dga-alb-test"
+#       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+#       "alb.ingress.kubernetes.io/target-type" = "ip"
+#       "alb.ingress.kubernetes.io/group.name" = "dga-alb-group"
+#       "alb.ingress.kubernetes.io/healthcheck-path" = "/users/testget"
+#     }
+#   }
+#   spec {
+#     ingress_class_name = "alb"
+#     rule {
+#       http {
+#         path {
+#           backend {
+#             service {
+#               name = "user-svc"
+#               port {
+#                 number = 80
+#               }
+#             }
+#           }
+#           path = "/users"
+#         }
+#       }
+#     }
+#   }
+#   depends_on = [ 
+#     resource.kubernetes_namespace.user
+#    ]
+# }
 
 resource "kubernetes_ingress_v1" "alb2" {
   metadata {
@@ -419,12 +419,12 @@ resource "kubernetes_namespace" "argocd" {
 }
 # argocd namespace 생성
 
-resource "kubernetes_manifest" "argo_ingress" {
-  manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
-  depends_on = [ 
-    resource.kubernetes_namespace.argocd
-   ]
-}
+# resource "kubernetes_manifest" "argo_ingress" {
+#   manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
+#   depends_on = [ 
+#     resource.kubernetes_namespace.argocd
+#    ]
+# }
 
 resource "helm_release" "argocd" {
   repository       = "https://argoproj.github.io/argo-helm"
