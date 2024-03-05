@@ -414,13 +414,16 @@ resource "kubernetes_namespace" "argocd" {
     name = "argocd"
   }
   depends_on = [ 
-    resource.helm_release.release
+    resource.helm_release.argocd
    ]
 }
 # argocd namespace 생성
 
 resource "kubernetes_manifest" "argo_ingress" {
   manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
+  depends_on = [ 
+    resource.kubernetes_namespace.argocd
+   ]
 }
 
 resource "helm_release" "argocd" {
@@ -437,7 +440,6 @@ resource "helm_release" "argocd" {
   }
 
   depends_on = [
-    module.dga-eks,
-    kubernetes_namespace.argocd
+    resource.helm_release.release
   ]
 }
