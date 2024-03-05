@@ -419,7 +419,7 @@ resource "kubernetes_namespace" "argocd" {
     resource.helm_release.argocd
    ]
 }
-# # argocd namespace 생성
+# # # argocd namespace 생성
 
 resource "kubernetes_manifest" "argo_ingress" {
   manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
