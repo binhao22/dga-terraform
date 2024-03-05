@@ -1,9 +1,4 @@
 # 타 워크스페이스에서 값을 받아옴
-data "tfe_outputs" "jinsung" {
-  organization = "DGA-PROJECT"
-  workspace = "jinsung"
-}
-
 # VPC module
 module "dga-vpc" {
   source = "./module/vpc"
