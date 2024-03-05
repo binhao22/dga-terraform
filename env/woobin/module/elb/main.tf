@@ -47,6 +47,7 @@ resource "aws_lb_target_group" "dga-nlb-tg" {
 #   target_id        = data.aws_lb.arn
 #   port             = 80
 # }
+#
 
 # nlb 리스너 생성
 resource "aws_lb_listener" "dga-nlb-listener" {
