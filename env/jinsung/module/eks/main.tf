@@ -43,10 +43,6 @@ module "dga-eks" {
 
 data "aws_eks_cluster_auth" "this" {
   name = "dga-cluster-test"
-
-  depends_on = [
-    module.dga-eks
-  ]
 }
 
 
