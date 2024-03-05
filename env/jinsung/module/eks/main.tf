@@ -92,6 +92,30 @@ locals {
 #   ]
 # }
 
+module "lb_controller_role" {
+  source = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+
+  create_role = true
+
+  role_name        = local.lb_controller_iam_role_name
+  role_path        = "/"
+  role_description = "Used by AWS Load Balancer Controller for EKS."
+
+  role_permissions_boundary_arn = ""
+
+  provider_url = replace(module.dga-eks.cluster_oidc_issuer_url, "https://", "")
+  oidc_fully_qualified_subjects = [
+    "system:serviceaccount:kube-system:${local.lb_controller_service_account_name}"
+  ]
+  oidc_fully_qualified_audiences = [
+    "sts.amazonaws.com"
+  ]
+
+  depends_on = [
+    module.dga-eks
+  ]
+}
+
 data "http" "iam_policy" {
   url = "https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json"
 }
@@ -409,22 +433,22 @@ resource "kubernetes_ingress_v1" "alb6" {
 
 # # # ArgoCD
 
-resource "kubernetes_namespace" "argocd" {
-  metadata {
-    name = "argocd"
-  }
-  depends_on = [ 
-    resource.helm_release.argocd
-   ]
-}
+# resource "kubernetes_namespace" "argocd" {
+#   metadata {
+#     name = "argocd"
+#   }
+#   depends_on = [ 
+#     resource.helm_release.argocd
+#    ]
+# }
 # argocd namespace 생성
 
-resource "kubernetes_manifest" "argo_ingress" {
-  manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
-  depends_on = [ 
-    resource.kubernetes_namespace.argocd
-   ]
-}
+# resource "kubernetes_manifest" "argo_ingress" {
+#   manifest = yamldecode(file("./module/eks/helm/argo-ingress.yml"))
+#   depends_on = [ 
+#     resource.kubernetes_namespace.argocd
+#    ]
+# }
 
 # resource "helm_release" "argocd" {
 #   repository       = "https://argoproj.github.io/argo-helm"
