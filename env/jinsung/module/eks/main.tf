@@ -76,7 +76,7 @@ module "lb_controller_role" {
 
   role_name        = local.lb_controller_iam_role_name
   role_path        = "/"
-  role_description = "Used by AWS Load Balancer Controller for EKS."
+  role_description = "Used by AWS Load Balancer Controller for EKS"
 
   role_permissions_boundary_arn = ""
 
