@@ -191,7 +191,7 @@ resource "kubernetes_namespace" "admin" {
    ]
 }
 
-# # # ingress 배포
+# # # ingress 배포 #
 
 resource "kubernetes_ingress_v1" "alb" {
   metadata {
