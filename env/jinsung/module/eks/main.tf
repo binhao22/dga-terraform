@@ -68,29 +68,29 @@ locals {
 }
 # 재설정 변수 
 
-module "lb_controller_role" {
-  source = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+# module "lb_controller_role" {
+#   source = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
 
-  create_role = true
+#   create_role = true
 
-  role_name        = local.lb_controller_iam_role_name
-  role_path        = "/"
-  role_description = "Used by AWS Load Balancer Controller for EKS"
+#   role_name        = local.lb_controller_iam_role_name
+#   role_path        = "/"
+#   role_description = "Used by AWS Load Balancer Controller for EKS"
 
-  role_permissions_boundary_arn = ""
+#   role_permissions_boundary_arn = ""
 
-  provider_url = replace(module.dga-eks.cluster_oidc_issuer_url, "https://", "")
-  oidc_fully_qualified_subjects = [
-    "system:serviceaccount:kube-system:${local.lb_controller_service_account_name}"
-  ]
-  oidc_fully_qualified_audiences = [
-    "sts.amazonaws.com"
-  ]
+#   provider_url = replace(module.dga-eks.cluster_oidc_issuer_url, "https://", "")
+#   oidc_fully_qualified_subjects = [
+#     "system:serviceaccount:kube-system:${local.lb_controller_service_account_name}"
+#   ]
+#   oidc_fully_qualified_audiences = [
+#     "sts.amazonaws.com"
+#   ]
 
-  depends_on = [
-    module.dga-eks
-  ]
-}
+#   depends_on = [
+#     module.dga-eks
+#   ]
+# }
 
 data "http" "iam_policy" {
   url = "https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json"
