@@ -66,7 +66,7 @@ locals {
   lb_controller_iam_role_name        = "dga-eks-aws-lb-ctrl1"
   lb_controller_service_account_name = "aws-load-balancer-controller"
 }
-# 재설정 변수 
+# 재설정 변수 #
 
 module "lb_controller_role" {
   source = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
