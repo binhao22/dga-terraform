@@ -129,6 +129,7 @@ resource "helm_release" "release" {
   ]
 }
 
+#
 # 배포에 사용할 namespace 지정
 locals {
   ns_admin      = "admin"
