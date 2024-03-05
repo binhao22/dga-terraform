@@ -44,7 +44,7 @@ resource "aws_lb_target_group" "dga-nlb-tg" {
 # resource "aws_lb_target_group_attachment" "dga-nlb-tg-attachment" {
 #   target_group_arn = aws_lb_target_group.dga-nlb-tg.arn
 #   # EKS 에서 생성된 ALB 연결
-#   target_id        = var.alb-arn
+#   target_id        = data.aws_lb.arn
 #   port             = 80
 # }
 

@@ -46,18 +46,28 @@ data "aws_eks_cluster_auth" "this" {
 }
 
 
-provider "helm" {
+# provider "helm" {
+#   kubernetes {
+#     host                   = module.dga-eks.cluster_endpoint
+#     cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
+#     token                  = data.aws_eks_cluster_auth.this.token
+#   }
+# }
+
+# provider "kubernetes" {
+#   host                   = module.dga-eks.cluster_endpoint
+#   cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
+#   token                  = data.aws_eks_cluster_auth.this.token
+# }
+
+ provider "helm" {
   kubernetes {
-    host                   = module.dga-eks.cluster_endpoint
-    cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
-    token                  = data.aws_eks_cluster_auth.this.token
+    config_path = "~/.kube/config"
   }
 }
 
-provider "kubernetes" {
-  host                   = module.dga-eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.dga-eks.cluster_certificate_authority_data)
-  token                  = data.aws_eks_cluster_auth.this.token
+ provider "kubernetes" {
+    config_path = "~/.kube/config"
 }
 
 # # #
