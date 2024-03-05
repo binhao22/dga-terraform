@@ -43,6 +43,10 @@ module "dga-eks" {
 
 data "aws_eks_cluster_auth" "this" {
   name = "dga-cluster-test"
+
+  depends_on = [
+    module.dga-eks
+  ]
 }
 
 
@@ -86,6 +90,10 @@ module "lb_controller_role" {
   oidc_fully_qualified_audiences = [
     "sts.amazonaws.com"
   ]
+
+  depends_on = [
+    module.dga-eks
+  ]
 }
 
 data "http" "iam_policy" {
@@ -119,6 +127,9 @@ resource "helm_release" "release" {
       value = set.value
     }
   }
+  depends_on = [
+    resource.aws_iam_role_policy.controller
+  ]
 }
 
 # 배포에 사용할 namespace 지정
@@ -137,31 +148,49 @@ resource "kubernetes_namespace" "board" {
   metadata {
     name = "board"
   }
+  depends_on = [ 
+    resource.helm_release.release
+   ]
 }
 resource "kubernetes_namespace" "user" {
   metadata {
     name = "user"
   }
+  depends_on = [ 
+    resource.helm_release.release
+   ]
 }
 resource "kubernetes_namespace" "leaderboard" {
   metadata {
     name = "leaderboard"
   }
+  depends_on = [ 
+    resource.helm_release.release
+   ]
 }
 resource "kubernetes_namespace" "myplan" {
   metadata {
     name = "myplan"
   }
+  depends_on = [ 
+    resource.helm_release.release
+   ]
 }
 resource "kubernetes_namespace" "search" {
   metadata {
     name = "search"
   }
+  depends_on = [ 
+    resource.helm_release.release
+   ]
 }
 resource "kubernetes_namespace" "admin" {
   metadata {
     name = "admin"
   }
+  depends_on = [ 
+    resource.helm_release.release
+   ]
 }
 
 # # # ingress 배포
@@ -197,6 +226,9 @@ resource "kubernetes_ingress_v1" "alb" {
       }
     }
   }
+  depends_on = [ 
+    resource.kubernetes_namespace.user
+   ]
 }
 
 resource "kubernetes_ingress_v1" "alb2" {
@@ -230,6 +262,9 @@ resource "kubernetes_ingress_v1" "alb2" {
       }
     }
   }
+  depends_on = [ 
+    resource.kubernetes_namespace.admin
+   ]
 }
 
 resource "kubernetes_ingress_v1" "alb3" {
@@ -263,6 +298,9 @@ resource "kubernetes_ingress_v1" "alb3" {
       }
     }
   }
+  depends_on = [ 
+    resource.kubernetes_namespace.board
+   ]
 }
 
 resource "kubernetes_ingress_v1" "alb4" {
@@ -296,6 +334,9 @@ resource "kubernetes_ingress_v1" "alb4" {
       }
     }
   }
+  depends_on = [ 
+    resource.kubernetes_namespace.leaderboard
+   ]
 }
 
 resource "kubernetes_ingress_v1" "alb5" {
@@ -329,6 +370,9 @@ resource "kubernetes_ingress_v1" "alb5" {
       }
     }
   }
+  depends_on = [ 
+    resource.kubernetes_namespace.myplan
+   ]
 }
 
 resource "kubernetes_ingress_v1" "alb6" {
@@ -362,6 +406,9 @@ resource "kubernetes_ingress_v1" "alb6" {
       }
     }
   }
+  depends_on = [ 
+    resource.kubernetes_namespace.search
+   ]
 }
 
 # # # ArgoCD
@@ -370,6 +417,9 @@ resource "kubernetes_namespace" "argocd" {
   metadata {
     name = "argocd"
   }
+  depends_on = [ 
+    resource.helm_release.release
+   ]
 }
 # argocd namespace 생성
 
