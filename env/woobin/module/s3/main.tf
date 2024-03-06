@@ -44,7 +44,7 @@ resource "aws_s3_bucket_website_configuration" "hosting" {
   }
 }
 
-# 버킷 정책 생성
+# 버킷 정책 생성.
 resource "aws_s3_bucket_policy" "policy" {
   bucket = aws_s3_bucket.dga-s3.id
   policy = jsonencode(
