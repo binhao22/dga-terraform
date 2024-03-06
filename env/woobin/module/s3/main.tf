@@ -63,6 +63,9 @@ resource "aws_s3_bucket_policy" "policy" {
       ]
     }
   )
+  depends_on = [ 
+    resource.aws_s3_bucket_public_access_block.public
+   ]
 }
 
 # 버킷 지표 생성
