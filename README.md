@@ -10,6 +10,6 @@
 * S3
 * NLB
 * ALB
-* EKS
+* EKS (파이프라인 제외)
 * RDS for Postgre
 * DocumentDB (MongoDB)
