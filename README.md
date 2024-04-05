@@ -11,5 +11,5 @@
 * NLB
 * ALB
 * EKS (파이프라인 제외)
-* RDS for Postgre
+* RDS for PostgreSQL
 * DocumentDB (MongoDB)
